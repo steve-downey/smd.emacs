@@ -1,10 +1,10 @@
 ;; load before processing rest of init.el
 
-(setq url-proxy-services
-      '(("no_proxy" . "^.*\\(bloomberg\\)\.\\(com\\|net\\)")
-        ("http"     . "devproxy.bloomberg.com:82")
-        ("https"    . "devproxy.bloomberg.com:82")))
-
+(when (getenv "BBENV")
+  (setq url-proxy-services
+        '(("no_proxy" . "^.*\\(bloomberg\\)\.\\(com\\|net\\)")
+          ("http"     . "devproxy.bloomberg.com:82")
+          ("https"    . "devproxy.bloomberg.com:82"))))
 
 (setq *init-extra-packages*
       '(ac-etags
