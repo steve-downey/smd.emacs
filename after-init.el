@@ -12,7 +12,6 @@
 (require 'ib-c-style)
 
 (add-hook 'c-mode-common-hook 'flyspell-prog-mode)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; I like to know what time it is. These lines show the clock in
 ;; the status bar. Comment out first line if you prefer to show
