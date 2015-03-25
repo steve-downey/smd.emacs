@@ -22,3 +22,5 @@
 (setq *init-display-line-numbers* nil)
 
 (setq *init-theme* 'zenburn)
+
+(setq *init-enable-cua-mode* :region)
