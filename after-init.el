@@ -126,14 +126,6 @@ than the window-width are displayed with a continuation symbol."
 
 
 
-;; +/- font size
-(global-set-key [(control mouse-4)] (function text-scale-increase))
-(global-set-key [(control mouse-5)] (function text-scale-increase))
-
-(global-set-key [(meta mouse-4)] (function text-scale-increase))
-(global-set-key [(meta mouse-5)] (function text-scale-increase))
-
-
 ;; truncate shell buffers
 (setq comint-buffer-maximum-size 2048)
 (add-hook 'comint-output-filter-functions
