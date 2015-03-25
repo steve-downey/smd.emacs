@@ -1,4 +1,5 @@
 ;; further customization, not part of default
+(require 'smd)
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings 'meta))
@@ -126,15 +127,11 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; +/- font size
-(global-set-key [(control mouse-4)] (lambda () (interactive)
-                                      (text-scale-increase 1)))
-(global-set-key [(control mouse-5)] (lambda () (interactive)
-                                      (text-scale-decrease 1)))
+(global-set-key [(control mouse-4)] (function text-scale-increase))
+(global-set-key [(control mouse-5)] (function text-scale-increase))
 
-(global-set-key [(meta mouse-4)] (lambda () (interactive)
-                                   (text-scale-increase 1)))
-(global-set-key [(meta mouse-5)] (lambda () (interactive)
-                                   (text-scale-decrease 1)))
+(global-set-key [(meta mouse-4)] (function text-scale-increase))
+(global-set-key [(meta mouse-5)] (function text-scale-increase))
 
 
 ;; truncate shell buffers
