@@ -5,11 +5,7 @@
   (windmove-default-keybindings 'meta))
 
 
-(setq mail-host-address "bloomberg.net")
-(setq user-mail-address "sdowney2@bloomberg.net")
-
 (require 'google-c-style)
-(require 'ib-c-style)
 
 (add-hook 'c-mode-common-hook 'flyspell-prog-mode)
 
@@ -169,9 +165,10 @@ than the window-width are displayed with a continuation symbol."
 (global-set-key [C-tab] 'clang-format-region)
 (global-set-key (kbd "C-x \\") 'align-entire)
 
+(setq user-mail-address "sdowney@sdowney.org")
 
 ;; BLP specific
-(when *exordium-bloomberg*
+(when exordium-bloomberg
   (add-to-list 'load-path "~/elisp/blp-emacs")
   (require 'blp-console)
   (require 'sql3-comdb2)
@@ -183,7 +180,13 @@ than the window-width are displayed with a continuation symbol."
                '("labafn3" nil "/ssh:sdowney@ony-bam1:"))
 
   (add-to-list 'tramp-restricted-shell-hosts-alist
-               "\\`ony-bam1\\'"))
+               "\\`ony-bam1\\'")
+
+  (setq mail-host-address "bloomberg.net")
+  (setq user-mail-address "sdowney2@bloomberg.net")
+
+  (require 'ib-c-style)
+  )
 
 (require 'find-dired)
 (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
