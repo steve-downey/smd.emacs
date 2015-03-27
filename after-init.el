@@ -153,15 +153,6 @@ than the window-width are displayed with a continuation symbol."
 (setq tramp-default-method "ssh")
 (require 'tramp nil 'noerror)
 
-(add-to-list 'tramp-default-proxies-alist
-             '("balab1" nil "/ssh:sdowney@ony-bam1:"))
-(add-to-list 'tramp-default-proxies-alist
-             '("labafn3" nil "/ssh:sdowney@ony-bam1:"))
-
-(add-to-list 'tramp-restricted-shell-hosts-alist
-             "\\`ony-bam1\\'")
-
-
 
 ;; ;; after mouse selection in X11 apps, you can paste by `yank' in emacs
 (setq x-select-enable-primary t)
@@ -180,10 +171,19 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; BLP specific
-(add-to-list 'load-path "~/elisp/blp-emacs")
-(require 'blp-console)
-(require 'sql3-comdb2)
+(when *exordium-bloomberg*
+  (add-to-list 'load-path "~/elisp/blp-emacs")
+  (require 'blp-console)
+  (require 'sql3-comdb2)
 
+  (add-to-list 'tramp-default-proxies-alist
+               '("balab1" nil "/ssh:sdowney@ony-bam1:"))
+
+  (add-to-list 'tramp-default-proxies-alist
+               '("labafn3" nil "/ssh:sdowney@ony-bam1:"))
+
+  (add-to-list 'tramp-restricted-shell-hosts-alist
+               "\\`ony-bam1\\'"))
 
 (require 'find-dired)
 (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
