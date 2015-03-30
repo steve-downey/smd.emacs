@@ -24,3 +24,7 @@
 (setq *exordium-theme* 'zenburn)
 
 (setq *exordium-enable-cua-mode* :region)
+
+(setq exordium-enable-newline-and-indent t)
+
+(setq exordim-desktop t)
