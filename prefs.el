@@ -1,4 +1,4 @@
-(setq *exordium-preferred-fonts*
+(setq exordium-preferred-fonts
       '(
         ("Inconsolata" . 120)
         ("Source Code Pro" . 120)
@@ -17,14 +17,12 @@
         ("Ubuntu Mono" . 120)
         ))
 
-(setq *exordium-enable-cua-mode* t)
+(setq exordium-display-line-numbers nil)
 
-(setq *exordium-display-line-numbers* nil)
+(setq exordium-theme 'zenburn)
 
-(setq *exordium-theme* 'zenburn)
-
-(setq *exordium-enable-cua-mode* :region)
+(setq exordium-enable-cua-mode :region)
 
 (setq exordium-enable-newline-and-indent t)
 
-(setq exordim-desktop t)
+(setq exordium-desktop t)
