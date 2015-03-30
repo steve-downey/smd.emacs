@@ -156,8 +156,6 @@ than the window-width are displayed with a continuation symbol."
 (setq select-active-regions nil)
 
 
-;; Desktop mode
-(desktop-save-mode 1)
 
 
 ;; clang format
