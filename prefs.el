@@ -26,3 +26,7 @@
 (setq exordium-enable-newline-and-indent t)
 
 (setq exordium-desktop t)
+
+(setq exordium-enable-powerline t)
+
+(setq exordium-pinned-melpa-package-repo "http://stable.melpa.org/packages/")
