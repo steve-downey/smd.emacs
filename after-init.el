@@ -205,4 +205,15 @@ than the window-width are displayed with a continuation symbol."
 (setq tooltip-mode nil)
 
 
+;; Powerline idle hack
+(defun powerline ()
+  "Enable powerline"
+  (interactive)
+  (require 'powerline)
+  (powerline-set-selected-window)
+  (require 'init-powerline)
+  (redraw-display))
+
+(run-with-idle-timer 1 nil #'powerline)
+
 ;;; End of file
