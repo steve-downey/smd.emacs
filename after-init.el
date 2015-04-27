@@ -205,4 +205,9 @@ than the window-width are displayed with a continuation symbol."
 (setq tooltip-mode nil)
 
 
+;; Google Calendar integration
+(require 'org-gcal)
+(setq org-gcal-client-id "849208402813-agsqjc2p8dnfrnr79s35efq014bus94o.apps.googleusercontent.com"
+      org-gcal-client-secret "nA1mxHmTlVg7nAFNmJDnTHDG"
+      org-gcal-file-alist '(("sdowney@gmail.com" .  "~/schedule.org")))
 ;;; End of file
