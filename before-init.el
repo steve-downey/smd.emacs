@@ -6,7 +6,7 @@
           ("http"     . "devproxy.bloomberg.com:82")
           ("https"    . "devproxy.bloomberg.com:82"))))
 
-(setq *init-extra-packages*
+(setq exordium-extra-packages
       '(ac-etags
         ack
 ;;        ample-theme
