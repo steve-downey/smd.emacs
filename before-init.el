@@ -4,7 +4,8 @@
   (setq url-proxy-services
         '(("no_proxy" . "^.*\\(bloomberg\\)\.\\(com\\|net\\)")
           ("http"     . "devproxy.bloomberg.com:82")
-          ("https"    . "devproxy.bloomberg.com:82"))))
+          ("https"    . "devproxy.bloomberg.com:82")))
+  (setq exordium-bloomberg 't))
 
 (setq exordium-extra-packages
       '(ac-etags

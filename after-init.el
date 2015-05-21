@@ -202,14 +202,43 @@ than the window-width are displayed with a continuation symbol."
 
 ;; compatibility hacks
 (setq x-gtk-use-system-tooltips nil)
-(setq tooltip-mode nil)
+(tooltip-mode nil)
+(setq show-help-function nil)
 
 
-;; Google Calendar integration
-(require 'org-gcal)
-(setq org-gcal-client-id "849208402813-agsqjc2p8dnfrnr79s35efq014bus94o.apps.googleusercontent.com"
-      org-gcal-client-secret "nA1mxHmTlVg7nAFNmJDnTHDG"
-      org-gcal-file-alist '(("sdowney@gmail.com" .  "~/schedule.org")))
+;; org-mode and babel config
+(eval-after-load "org"
+  '(require 'ox-md nil t))
+
+(setq org-completion-use-ido t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '( (perl . t)
+    (ruby . t)
+    (sh . t)
+    (python . t)
+    (emacs-lisp . t)
+    (C . t)
+    ))
+
+;; Do not prompt to confirm evaluation
+;; This may be dangerous - make sure you understand the consequences
+;; of setting this -- see the docstring for details
+(setq org-confirm-babel-evaluate nil)
+(setq org-src-fontify-natively t)
+(setq org-src-preserve-indentation t)
+
+
+(add-hook 'org-src-mode-hook
+          (lambda ()
+            (turn-off-fci-mode)))
+
+;; ;; Google Calendar integration
+;; (require 'org-gcal)
+;; (setq org-gcal-client-id "849208402813-agsqjc2p8dnfrnr79s35efq014bus94o.apps.googleusercontent.com"
+;;       org-gcal-client-secret "nA1mxHmTlVg7nAFNmJDnTHDG"
+;;       org-gcal-file-alist '(("sdowney@gmail.com" .  "~/schedule.org")))
 
 ;; Powerline idle hack
 (defun powerline ()
@@ -221,5 +250,37 @@ than the window-width are displayed with a continuation symbol."
   (redraw-display))
 
 (run-with-idle-timer 1 nil #'powerline)
+
+
+;; For jekyll
+(require 'ox-publish)
+(setq org-publish-project-alist
+      '(("org-sdowney"
+         ;; Path to your org files.
+         :base-directory "~/mbig/sdowney/sdowney/org"
+         :base-extension "org"
+
+         ;; Path to your Jekyll project.
+         :publishing-directory "~/mbig/sdowney/sdowney/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :html-extension "html"
+         :section-numbers nil
+         :headline-levels 4
+         :table-of-contents t
+         :auto-index nil
+         :auto-preamble nil
+         :body-only t) ;; Only export section between <body> </body>
+
+        ("org-static-sdowney"
+         :base-directory "~/mbig/sdowney/sdowney/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+         :publishing-directory "~/mbig/sdowney/sdowney/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         :table-of-contents nil)
+
+        ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
 
 ;;; End of file

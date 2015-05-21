@@ -30,3 +30,5 @@
 (setq exordium-enable-powerline t)
 
 (setq exordium-pinned-melpa-package-repo "http://stable.melpa.org/packages/")
+
+(setq exordium-fci-mode :always)
