@@ -7,8 +7,6 @@
 
 (require 'google-c-style)
 
-(add-hook 'c-mode-common-hook 'flyspell-prog-mode)
-
 ;; I like to know what time it is. These lines show the clock in
 ;; the status bar. Comment out first line if you prefer to show
 ;; time in 12 hour format
@@ -26,7 +24,7 @@
 
 ;;=========================================================================
 ;;
-;; Customize the Emacs Window titlebar like: "hostname: /path/to/file".
+;; Customize the Emacs Window titlebar like: "user@hostname:/path/to/file".
 ;;
 ;;=========================================================================
 (setq frame-title-format (format "%s@%s:%%f"
@@ -164,6 +162,9 @@ than the window-width are displayed with a continuation symbol."
 (global-set-key (kbd "C-x \\") 'align-entire)
 
 (setq user-mail-address "sdowney@sdowney.org")
+
+(when (getenv "BBENV")
+  (setq exordium-bloomberg 't))
 
 ;; BLP specific
 (when exordium-bloomberg
