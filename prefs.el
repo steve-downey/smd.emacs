@@ -32,3 +32,5 @@
 (setq exordium-pinned-melpa-package-repo "http://stable.melpa.org/packages/")
 
 (setq exordium-fci-mode :prog)
+
+(setq exordium-no-org-babel-confirm t)
