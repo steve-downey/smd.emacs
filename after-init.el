@@ -10,6 +10,7 @@
 ;; I like to know what time it is. These lines show the clock in
 ;; the status bar. Comment out first line if you prefer to show
 ;; time in 12 hour format
+(setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time)
 
