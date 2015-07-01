@@ -160,6 +160,7 @@ than the window-width are displayed with a continuation symbol."
 ;; clang format
 (require 'clang-format)
 (global-set-key [C-tab] 'clang-format-region)
+(global-set-key (kbd "C-c f") 'clang-format-region)
 (global-set-key (kbd "C-x \\") 'align-entire)
 
 (setq user-mail-address "sdowney@sdowney.org")
