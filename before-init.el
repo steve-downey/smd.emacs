@@ -21,8 +21,6 @@
         dtrt-indent
         flycheck
         flycheck-google-cpplint
-        git-commit-mode
-        git-rebase-mode
         google-c-style
         haskell-mode
         htmlize
