@@ -286,4 +286,29 @@ than the window-width are displayed with a continuation symbol."
 
         ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
 
+
+;; clone buffer into new frame
+(defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
+  "Like `clone-indirect-buffer' but display in a new frame."
+  (interactive
+   (progn
+     (if (get major-mode 'no-clone-indirect)
+         (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+     (list (if current-prefix-arg
+               (read-buffer "Name of indirect buffer: " (current-buffer)))
+           t)))
+  (if (get major-mode 'no-clone-indirect)
+      (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+  (setq newname (or newname (buffer-name)))
+  (if (string-match "<[0-9]+>\\'" newname)
+      (setq newname (substring newname 0 (match-beginning 0))))
+  (let* ((name (generate-new-buffer-name newname))
+         (buffer (make-indirect-buffer (current-buffer) name t)))
+    (with-current-buffer buffer
+      (run-hooks 'clone-indirect-buffer-hook))
+    (pop-to-buffer name display-buffer--other-frame-action norecord)
+    buffer))
+
+(define-key ctl-x-5-map (kbd "c") 'clone-indirect-buffer-new-frame)
+
 ;;; End of file
