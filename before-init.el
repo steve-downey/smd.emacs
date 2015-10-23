@@ -39,7 +39,6 @@
         multi-term
         org
         org-ac
-        org-magit
         org2blog
         pkg-info
         psvn

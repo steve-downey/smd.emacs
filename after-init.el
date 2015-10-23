@@ -186,7 +186,17 @@ than the window-width are displayed with a continuation symbol."
   (setq mail-host-address "bloomberg.net")
   (setq user-mail-address "sdowney2@bloomberg.net")
 
+  (setq magit-git-executable "/opt/bb/bin/git")
+
   (require 'ib-c-style)
+  (defun my-c-mode-common-hook ()
+    (ib-set-c-style)
+    (ib-make-newline-indent)
+    ;; I like auto-newline and hungry-delete
+    (c-toggle-auto-state 1)
+    (c-toggle-hungry-state 1)
+    )
+  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
   )
 
 (require 'find-dired)
