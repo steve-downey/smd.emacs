@@ -39,3 +39,5 @@
 
 (setq exordium-org-export-css-stylesheet
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://sundev3.dev.bloomberg.com/~sdowney/smd-zenburn.css\" />")
+
+(setq exordium-highlight-symbol t)
