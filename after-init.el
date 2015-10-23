@@ -311,4 +311,6 @@ than the window-width are displayed with a continuation symbol."
 
 (define-key ctl-x-5-map (kbd "c") 'clone-indirect-buffer-new-frame)
 
+(setq explicit-bash-args '("--noediting" "--login" "-i"))
+
 ;;; End of file
