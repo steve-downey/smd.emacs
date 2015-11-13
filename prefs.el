@@ -1,5 +1,6 @@
 (setq exordium-preferred-fonts
       '(
+        ("Roboto Mono" . 100)
         ("Inconsolata" . 120)
         ("Source Code Pro" . 120)
         ("Consolas" . 120)
