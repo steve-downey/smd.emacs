@@ -323,4 +323,44 @@ than the window-width are displayed with a continuation symbol."
 
 (setq explicit-bash-args '("--noediting" "--login" "-i"))
 
+
+;; LLVM coding style guidelines in emacs
+;; Maintainer: LLVM Team, http://llvm.org/
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(c-add-style "llvm.org"
+             '("gnu"
+               (fill-column . 80)
+               (c++-indent-level . 2)
+               (c-basic-offset . 2)
+               (indent-tabs-mode . nil)
+               (c-offsets-alist . ((arglist-intro . ++)
+                                   (innamespace . 0)
+                                   (member-init-intro . ++)))))
+
+;; Files with "llvm" in their names will automatically be set to the
+;; llvm.org coding style.
+(add-hook 'c-mode-common-hook
+          (function
+           (lambda nil
+             (if (string-match "llvm" buffer-file-name)
+                 (progn
+                   (c-set-style "llvm.org"))))))
+
+
+(require 'org2blog)
+;; Don't use sourcecode tags in wordpress
+(setq org2blog/wp-use-sourcecode-shortcode nil)
+;; Default parameters for sourcecode tag
+(setq org2blog/wp-sourcecode-default-params nil)
+
+(setq org2blog/wp-blog-alist
+      '(("sdowney"
+         :url "http://www.sdowney.org/wordpress/xmlrpc.php"
+         :username "sdowney"
+         :default-title "Hello World"
+         :default-categories ("org2blog" "emacs")
+         :tags-as-categories nil)
+        ))
+
 ;;; End of file

@@ -16,6 +16,7 @@
         ("Courier" . 120)
         ("Courier Prime" . 120)
         ("Ubuntu Mono" . 120)
+        ("CMU Typewriter Text" . 120)
         ))
 
 (setq exordium-display-line-numbers nil)
@@ -39,6 +40,10 @@
 (setq exordium-org-export-css t)
 
 (setq exordium-org-export-css-stylesheet
-      "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://sundev3.dev.bloomberg.com/~sdowney/smd-zenburn.css\" />")
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://raw.githubusercontent.com/steve-downey/css/master/smd-zenburn.css\" />")
 
 (setq exordium-highlight-symbol t)
+
+(setq exordium-enable-c++11-keywords :simple)
+
+;; (setq exordium-helm-everywhere t)
