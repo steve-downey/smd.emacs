@@ -3,11 +3,13 @@
 (when (getenv "BBENV")
   (setq exordium-bloomberg 't))
 
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+
 (setq exordium-extra-packages
       '(ac-etags
         ack
 ;;        ample-theme
-        auto-complete
         auto-complete-c-headers
         auto-complete-clang
         auto-complete-clang-async
@@ -34,17 +36,16 @@
         magit
         magit-svn
         markdown-mode+
-        markdown-mode
         markdown-toc
         multi-term
         org
         org-ac
-        org2blog
         pkg-info
         psvn
-        rainbow-delimiters
         ruby-electric
         sml-mode
+        gitconfig-mode
+        gitignore-mode
 ;;        soft-stone-theme
 ;;        solarized-theme
 ;;        twilight-theme
