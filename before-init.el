@@ -14,7 +14,7 @@
         auto-complete-clang
         auto-complete-clang-async
         browse-kill-ring
-        clang-format
+        ;; clang-format // need clang-format 3.8
         column-marker
         dash
         dired+

@@ -187,6 +187,7 @@ than the window-width are displayed with a continuation symbol."
   (setq user-mail-address "sdowney2@bloomberg.net")
 
   (setq magit-git-executable "/opt/bb/bin/git")
+  (setq magit-git-output-coding-system (quote utf-8))
 
   (require 'ib-c-style)
   (defun my-c-mode-common-hook ()

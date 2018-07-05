@@ -1,8 +1,7 @@
 (setq exordium-preferred-fonts
       '(
-        ("Roboto Mono" . 100)
+        ("Source Code Pro" . 110)
         ("Inconsolata" . 120)
-        ("Source Code Pro" . 120)
         ("Consolas" . 120)
         ("Bitstream Vera Sans Mono" . 120)
         ("DejaVu Sans Mono" . 120)
@@ -10,13 +9,16 @@
         ("Source Code Pro Bold" . 120)
         ("Source Code Pro Black" . 120)
         ("Lucida Sans Typewriter" . 120)
-        ("lucidatypewriter" . 120)
+;        ("lucidatypewriter" . 120)
         ("Anonymous Pro" . 120)
         ("Courier New" . 120)
         ("Courier" . 120)
         ("Courier Prime" . 120)
         ("Ubuntu Mono" . 120)
-        ("CMU Typewriter Text" . 120)
+        ("Roboto Mono" . 100)
+        ("CMU Typewriter Text" . 100)
+        ("Cousine" . 100)
+        ("Go Mono" . 110)
         ))
 
 (setq exordium-display-line-numbers nil)
@@ -44,6 +46,6 @@
 
 (setq exordium-highlight-symbol t)
 
-(setq exordium-enable-c++11-keywords :simple)
+(setq exordium-smooth-scroll nil)
 
-;; (setq exordium-helm-everywhere t)
+(setq exordium-enable-c++11-keywords :modern)
