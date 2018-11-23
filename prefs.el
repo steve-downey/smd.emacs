@@ -1,8 +1,8 @@
 (setq exordium-preferred-fonts
       '(
+        ("Source Code Pro" . 140)
         ("Roboto Mono" . 100)
         ("Inconsolata" . 120)
-        ("Source Code Pro" . 120)
         ("Consolas" . 120)
         ("Bitstream Vera Sans Mono" . 120)
         ("DejaVu Sans Mono" . 120)
@@ -21,7 +21,7 @@
 
 (setq exordium-display-line-numbers nil)
 
-(setq exordium-theme 'zenburn)
+(setq exordium-theme 'zerodark)
 
 (setq exordium-enable-cua-mode :region)
 
@@ -44,6 +44,6 @@
 
 (setq exordium-highlight-symbol t)
 
-(setq exordium-enable-c++11-keywords :simple)
+(setq exordium-enable-c++11-keywords :modern)
 
 ;; (setq exordium-helm-everywhere t)

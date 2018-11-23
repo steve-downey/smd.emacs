@@ -208,8 +208,8 @@ than the window-width are displayed with a continuation symbol."
     (add-hook 'after-make-frame-functions
               (lambda (frame)
                 (with-selected-frame frame
-                  (load-theme 'zenburn t))))
-  (load-theme 'zenburn t))
+                  (load-theme exordium-theme t))))
+  (load-theme exordium-theme t))
 
 
 
@@ -233,6 +233,8 @@ than the window-width are displayed with a continuation symbol."
     (python . t)
     (emacs-lisp . t)
     (C . t)
+    (R . t)
+    (latex . t)
     ))
 
 ;; Do not prompt to confirm evaluation
@@ -243,9 +245,32 @@ than the window-width are displayed with a continuation symbol."
 (setq org-src-preserve-indentation t)
 
 
+(setq org-capture-templates
+      '(
+        ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
+        ))
+
+(setq reftex-default-bibliography '("~/org/ref.bib"))
+
+(setq org-ref-bibliography-notes "~/org/notes.org"
+      org-ref-default-bibliography '("~/org/ref.bib")
+      org-ref-pdf-directory "~/org/bibtex-pdfs/")
+
+(setq bibtex-completion-bibliography "~/org/ref.bib"
+      bibtex-completion-library-path "~/org/bibtex-pdfs"
+      bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+
+(require 'org-ref)
+(require 'ox-bibtex)
+
 (add-hook 'org-src-mode-hook
           (lambda ()
             (turn-off-fci-mode)))
+
+;; Reveal.js + Org mode
+(require 'ox-reveal)
+(setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
+(setq Org-Reveal-title-slide nil)
 
 ;; ;; Google Calendar integration
 ;; (require 'org-gcal)
@@ -365,4 +390,73 @@ than the window-width are displayed with a continuation symbol."
          :tags-as-categories nil)
         ))
 
+
+;; (use-package lsp-clangd
+;;   :load-path
+;;   "~/.emacs.d/taps/lsp-clangd/"
+;;   :init
+;;   (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
+;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
+;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
+
+(add-hook 'org-src-mode-hook
+          (lambda ()
+            (turn-off-fci-mode)))
+
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+
 ;;; End of file
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(comint-buffer-maximum-size 20000)
+ '(comint-completion-addsuffix t)
+ '(comint-get-old-input (lambda nil "") t)
+ '(comint-input-ignoredups t)
+ '(comint-input-ring-size 5000)
+ '(comint-move-point-for-output nil)
+ '(comint-prompt-read-only nil)
+ '(comint-scroll-show-maximum-output t)
+ '(comint-scroll-to-bottom-on-input t)
+ '(custom-safe-themes
+   (quote
+    ("e73e2f2f01e2f3a3bbccf468f1e02042ff93325161e94241b061d8ac24514028" "f5519676e9580060b510012ffde3b41dd5392a3debc98a2b02995499a086a7d4" "6a18a817e5a1d220a8de8af5d6e5f4619fe3df61dd2cbc37b9acd8d77d42e026" "66836b81d1d351fd49ff4e9b30baef36108194cefc12a68e4fa27505e8e2ac56" default)))
+ '(fci-rule-color "#494949")
+ '(package-selected-packages
+   (quote
+    (ox-reveal zerodark-theme yasnippet vlf treemacs-projectile sml-mode ruby-electric rainbow-delimiters powerline paredit page-break-lines ox-gfm org2blog org-ref org-plus-contrib org-bullets org-ac nlinum multi-term modern-cpp-font-lock markdown-toc markdown-mode+ magit-svn lua-mode json-mode inf-ruby impatient-mode iedit ido-completing-read+ highlight-symbol helm-swoop helm-rtags helm-projectile helm-flycheck helm-descbinds helm-ag haskell-mode groovy-mode google-c-style gitignore-mode gitconfig-mode git-timemachine git-gutter-fringe flycheck-rtags fill-column-indicator expand-region exec-path-from-shell evil eval-sexp-fu enh-ruby-mode dtrt-indent diminish default-text-scale company-rtags cmake-mode clang-format cider browse-kill-ring auto-complete-clang-async auto-complete-clang auto-complete-c-headers ack ac-rtags ac-js2 ac-etags)))
+ '(protect-buffer-bury-p nil)
+ '(safe-local-variable-values (quote ((org-html-htmlize-output-type . inline-css))))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

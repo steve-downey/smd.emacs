@@ -4,7 +4,8 @@
   (setq exordium-bloomberg 't))
 
 (require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
 
 (setq exordium-extra-packages
       '(ac-etags
@@ -15,19 +16,19 @@
         auto-complete-clang-async
         browse-kill-ring
         clang-format
-        column-marker
+;;        column-marker
         dash
-        dired+
-        dired-details+
-        dired-details
+;;        dired+
+;;        dired-details+
+;;        dired-details
         dtrt-indent
         flycheck
-        flycheck-google-cpplint
+;;        flycheck-google-cpplint
         google-c-style
         haskell-mode
         htmlize
-        icicles
-        icomplete+
+;;        icicles
+;;        icomplete+
         inf-ruby
         json-mode
         json-reformat
@@ -38,10 +39,10 @@
         markdown-mode+
         markdown-toc
         multi-term
-        org
+        org-plus-contrib
         org-ac
         pkg-info
-        psvn
+;;        psvn
         ruby-electric
         sml-mode
         gitconfig-mode
@@ -49,5 +50,7 @@
 ;;        soft-stone-theme
 ;;        solarized-theme
 ;;        twilight-theme
-;;        zenburn-theme
+        ;;        zenburn-theme
+        org-ref
+        org2blog
         ))
