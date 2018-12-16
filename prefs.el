@@ -24,7 +24,7 @@
 
 (setq exordium-display-line-numbers nil)
 
-(setq exordium-theme 'zerodark)
+(setq exordium-theme 'zenburn)
 
 (setq exordium-enable-cua-mode :region)
 
@@ -50,3 +50,5 @@
 (setq exordium-smooth-scroll nil)
 
 (setq exordium-enable-c++11-keywords :modern)
+
+(setq exordium-use-variable-pitch t)
