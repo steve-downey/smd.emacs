@@ -269,9 +269,9 @@ than the window-width are displayed with a continuation symbol."
 ;;             (turn-off-fci-mode)))
 
 ;; Reveal.js + Org mode
-(require 'ox-reveal)
-(setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
-(setq Org-Reveal-title-slide nil)
+;; (require 'ox-reveal)
+;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
+;; (setq Org-Reveal-title-slide nil)
 
 ;; ;; Google Calendar integration
 ;; (require 'org-gcal)
