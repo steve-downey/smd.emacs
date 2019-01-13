@@ -26,11 +26,18 @@
 ;;=========================================================================
 ;;
 ;; Customize the Emacs Window titlebar like: "user@hostname:/path/to/file".
+;; Replace path to ~ with ~, display buffer name if no buffer file name
 ;;
 ;;=========================================================================
-(setq frame-title-format (format "%s@%s:%%f"
-                                 (user-login-name)
-                                 (system-name)))
+;; (setq frame-title-format (format "%s@%s:%%f"
+;;                                  (user-login-name)
+;;                                  (system-name)))
+
+(setq frame-title-format
+      '("" user-login-name "@" system-name ":"
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
 
 ;;=========================================================================
 ;;
