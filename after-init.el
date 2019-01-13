@@ -219,6 +219,13 @@ than the window-width are displayed with a continuation symbol."
 ;;                   (load-theme exordium-theme t))))
 ;;   (load-theme exordium-theme t))
 
+;;; SERVER MODE
+(require 'server)
+(if (server-running-p)
+    (load-theme 'solarized-light t)
+  (setq confirm-kill-emacs #'yes-or-no-p)
+  (server-start)
+  (global-set-key (kbd "C-x C-3") 'server-edit))
 
 
 ;; compatibility hacks
