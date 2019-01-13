@@ -43,7 +43,7 @@
 (setq exordium-org-export-css t)
 
 (setq exordium-org-export-css-stylesheet
-      "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://raw.githubusercontent.com/steve-downey/css/master/smd-zenburn.css\" />")
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://sdowney.org/css/smd-zenburn.css\" />")
 
 (setq exordium-highlight-symbol t)
 
