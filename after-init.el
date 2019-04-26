@@ -252,6 +252,8 @@ than the window-width are displayed with a continuation symbol."
     (latex . t)
     ))
 
+(setq org-support-shift-select 'always)
+
 ;; Do not prompt to confirm evaluation
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details
@@ -283,6 +285,8 @@ than the window-width are displayed with a continuation symbol."
 ;;             (turn-off-fci-mode)))
 
 ;; Reveal.js + Org mode
+(require 'org-re-reveal)
+(setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (setq Org-Reveal-title-slide nil)
@@ -413,6 +417,11 @@ than the window-width are displayed with a continuation symbol."
 ;;   (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
 ;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
 ;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
 
 (add-hook 'org-src-mode-hook
           (lambda ()
