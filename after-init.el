@@ -423,10 +423,6 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(add-hook 'org-src-mode-hook
-          (lambda ()
-            (turn-off-fci-mode)))
-
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
 
