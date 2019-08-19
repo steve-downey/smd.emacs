@@ -30,7 +30,10 @@
 
 (setq exordium-enable-newline-and-indent t)
 
-(setq exordium-desktop t)
+(require 'server)
+(if (server-running-p)
+    (setq exordium-desktop nil)
+  (setq exordium-desktop t))
 
 (setq exordium-enable-powerline t)
 
@@ -52,3 +55,5 @@
 (setq exordium-enable-c++11-keywords :modern)
 
 (setq exordium-use-variable-pitch t)
+
+(setq exordium-complete-mode :company)
