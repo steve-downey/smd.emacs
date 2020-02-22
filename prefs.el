@@ -20,6 +20,7 @@
         ("CMU Typewriter Text" . 100)
         ("Cousine" . 100)
         ("Go Mono" . 110)
+        ("IBM Plex Mono" . 110)
         ))
 
 (setq exordium-display-line-numbers nil)

@@ -97,6 +97,7 @@ than the window-width are displayed with a continuation symbol."
              (?m (file . ,"/bb/mbig/mbig77/msgsvn/trunk/msgbig/msgbig_objects.list"))
              (?p (file . ,"~/.profile"))
              (?b (file . ,"~/.bashrc"))
+             (?a (file . ,(locate-user-emacs-file "after-init.el")))
              ))
   (set-register (car r) (cadr r)))
 
@@ -420,10 +421,35 @@ than the window-width are displayed with a continuation symbol."
 
 (require 'eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(delete 'company-clang company-backends)
+
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
 
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+
+(with-eval-after-load 'flycheck
+  (require 'flycheck-clang-analyzer)
+  (flycheck-clang-analyzer-setup))
+
+
+(defun package-reinstall-all-activated-packages ()
+  "Refresh and reinstall all activated packages."
+  (interactive)
+  (package-refresh-contents)
+  (dolist (package-name package-activated-list)
+    (when (package-installed-p package-name)
+      (unless (ignore-errors                   ;some packages may fail to install
+                (package-reinstall package-name))
+        (warn "Package %s failed to reinstall" package-name)))))
+
+(setq markdown-command
+      (concat
+       "~/.local/bin/pandoc"
+       " --from=markdown --to=html"
+       " --standalone --mathjax --highlight-style=pygments"))
 ;;; End of file
