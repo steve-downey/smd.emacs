@@ -1,3 +1,9 @@
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (require 'use-package))
+
+
 ;; further customization, not part of default
 (require 'smd)
 
@@ -5,7 +11,7 @@
   (windmove-default-keybindings 'meta))
 
 
-(require 'google-c-style)
+(use-package google-c-style)
 
 ;; I like to know what time it is. These lines show the clock in
 ;; the status bar. Comment out first line if you prefer to show
@@ -18,8 +24,8 @@
 ;; Show trailing white spaces
 (setq-default show-trailing-whitespace t)
 
-(require 'calc)
-(require 'calc-ext)
+(use-package calc)
+(use-package calc-ext :ensure nil)
 (defvar calc-command-flags)
 
 
@@ -83,7 +89,7 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;;color escape sequence support in shell mode
-(require 'ansi-color)
+(use-package ansi-color)
 
 
 
@@ -134,12 +140,12 @@ than the window-width are displayed with a continuation symbol."
           'comint-truncate-buffer)
 
 ;; Clean up unused buffers after 3 days
-(require 'midnight)
+(use-package midnight)
 (setq clean-buffer-list-delay-general 3)
 
 
 
-(require 'newcomment)
+(use-package newcomment :ensure nil)
 (setq comment-auto-fill-only-comments 1)
 
 
@@ -154,7 +160,7 @@ than the window-width are displayed with a continuation symbol."
 ;; TRAMP config
 
 (setq tramp-default-method "ssh")
-(require 'tramp nil 'noerror)
+(use-package tramp)
 
 
 ;; ;; after mouse selection in X11 apps, you can paste by `yank' in emacs
@@ -166,7 +172,7 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; clang format
-(require 'clang-format)
+(use-package clang-format)
 (global-set-key [C-tab] 'clang-format-region)
 (global-set-key (kbd "C-c f") 'clang-format-region)
 (global-set-key (kbd "C-x \\") 'align-entire)
@@ -208,7 +214,7 @@ than the window-width are displayed with a continuation symbol."
   (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
   )
 
-(require 'find-dired)
+(use-package find-dired)
 (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
 
 
@@ -221,9 +227,9 @@ than the window-width are displayed with a continuation symbol."
 ;;   (load-theme exordium-theme t))
 
 ;;; SERVER MODE
-(require 'server)
+(use-package server)
 (if (server-running-p)
-    (load-theme 'solarized-light t)
+    (load-theme 'github-modern t)
   (setq confirm-kill-emacs #'yes-or-no-p)
   (server-start)
   (global-set-key (kbd "C-x C-3") 'server-edit))
@@ -278,15 +284,15 @@ than the window-width are displayed with a continuation symbol."
       bibtex-completion-library-path "~/org/bibtex-pdfs"
       bibtex-completion-notes-path "~/org/helm-bibtex-notes")
 
-(require 'org-ref)
-(require 'ox-bibtex)
+(use-package org-ref)
+(use-package ox-bibtex :ensure org-plus-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
 ;;             (turn-off-fci-mode)))
 
 ;; Reveal.js + Org mode
-(require 'org-re-reveal)
+(use-package org-re-reveal)
 (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
@@ -302,16 +308,16 @@ than the window-width are displayed with a continuation symbol."
 (defun powerline ()
   "Enable powerline"
   (interactive)
-  (require 'powerline)
+  (use-package powerline)
   (powerline-set-selected-window)
-  (require 'init-powerline)
+  (use-package init-powerline :ensure nil)
   (redraw-display))
 
 (run-with-idle-timer 1 nil #'powerline)
 
 
 ;; For jekyll
-(require 'ox-publish)
+(use-package ox-publish :ensure org-plus-contrib)
 (setq org-publish-project-alist
       '(("org-sdowney"
          ;; Path to your org files.
@@ -395,7 +401,7 @@ than the window-width are displayed with a continuation symbol."
                    (c-set-style "llvm.org"))))))
 
 
-(require 'org2blog)
+(use-package org2blog)
 ;; Don't use sourcecode tags in wordpress
 (setq org2blog/wp-use-sourcecode-shortcode nil)
 ;; Default parameters for sourcecode tag
@@ -419,14 +425,14 @@ than the window-width are displayed with a continuation symbol."
 ;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
 ;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
 
-(require 'eglot)
+(use-package eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (delete 'company-clang company-backends)
 
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(require 'ox-extra)
+(use-package ox-extra :ensure org-plus-contrib)
 (ox-extras-activate '(ignore-headlines))
 
 (eval-after-load 'flycheck
@@ -452,4 +458,7 @@ than the window-width are displayed with a continuation symbol."
        "~/.local/bin/pandoc"
        " --from=markdown --to=html"
        " --standalone --mathjax --highlight-style=pygments"))
+
+;;(use-package haskell-mode
+;;  :hook prog-mode)
 ;;; End of file
