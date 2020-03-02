@@ -229,7 +229,7 @@ than the window-width are displayed with a continuation symbol."
 ;;; SERVER MODE
 (use-package server)
 (if (server-running-p)
-    (load-theme 'github-modern t)
+    (load-theme 'tomorrow-night-blue t)
   (setq confirm-kill-emacs #'yes-or-no-p)
   (server-start)
   (global-set-key (kbd "C-x C-3") 'server-edit))
