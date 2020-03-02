@@ -461,4 +461,7 @@ than the window-width are displayed with a continuation symbol."
 
 ;;(use-package haskell-mode
 ;;  :hook prog-mode)
+
+(use-package forge
+  :after magit)
 ;;; End of file
