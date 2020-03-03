@@ -139,9 +139,9 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'comint-output-filter-functions
           'comint-truncate-buffer)
 
-;; Clean up unused buffers after 3 days
+;; Clean up unused buffers after 8 days
 (use-package midnight)
-(setq clean-buffer-list-delay-general 3)
+(setq clean-buffer-list-delay-general 8)
 
 
 
@@ -159,8 +159,10 @@ than the window-width are displayed with a continuation symbol."
 
 ;; TRAMP config
 
-(setq tramp-default-method "ssh")
-(use-package tramp)
+(use-package tramp
+  :init
+  (setq tramp-default-method "ssh")
+  )
 
 
 ;; ;; after mouse selection in X11 apps, you can paste by `yank' in emacs
@@ -172,9 +174,11 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; clang format
-(use-package clang-format)
-(global-set-key [C-tab] 'clang-format-region)
-(global-set-key (kbd "C-c f") 'clang-format-region)
+(use-package clang-format
+  :bind ("C-c f" . 'clang-format-region)
+  )
+;;(global-set-key [C-tab] 'clang-format-region)
+;;(global-set-key (kbd "C-c f") 'clang-format-region)
 (global-set-key (kbd "C-x \\") 'align-entire)
 
 (setq user-mail-address "sdowney@sdowney.org")
@@ -214,8 +218,10 @@ than the window-width are displayed with a continuation symbol."
   (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
   )
 
-(use-package find-dired)
-(setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+(use-package find-dired
+  :init
+  (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+  )
 
 
 ;; ;; DAEMON MODE
@@ -247,17 +253,17 @@ than the window-width are displayed with a continuation symbol."
 
 ;; (setq org-completion-use-ido t)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '( (perl . t)
-    (ruby . t)
-    (shell . t)
-    (python . t)
-    (emacs-lisp . t)
-    (C . t)
-    (R . t)
-    (latex . t)
-    ))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '( (perl . t)
+;;     (ruby . t)
+;;     (shell . t)
+;;     (python . t)
+;;     (emacs-lisp . t)
+;;     (C . t)
+;;     (R . t)
+;;     (latex . t)
+;;     ))
 
 (setq org-support-shift-select 'always)
 
@@ -269,22 +275,25 @@ than the window-width are displayed with a continuation symbol."
 ;; (setq org-src-preserve-indentation t)
 
 
-(setq org-capture-templates
-      '(
-        ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
-        ))
 
-(setq reftex-default-bibliography '("~/org/ref.bib"))
+(use-package org-ref
+  :config
+  (setq org-capture-templates
+        '(
+          ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
+          ))
 
-(setq org-ref-bibliography-notes "~/org/notes.org"
-      org-ref-default-bibliography '("~/org/ref.bib")
-      org-ref-pdf-directory "~/org/bibtex-pdfs/")
+  (setq reftex-default-bibliography '("~/org/ref.bib"))
 
-(setq bibtex-completion-bibliography "~/org/ref.bib"
-      bibtex-completion-library-path "~/org/bibtex-pdfs"
-      bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+  (setq org-ref-bibliography-notes "~/org/notes.org"
+        org-ref-default-bibliography '("~/org/ref.bib")
+        org-ref-pdf-directory "~/org/bibtex-pdfs/")
 
-(use-package org-ref)
+  (setq bibtex-completion-bibliography "~/org/ref.bib"
+        bibtex-completion-library-path "~/org/bibtex-pdfs"
+        bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+  )
+
 (use-package ox-bibtex :ensure org-plus-contrib)
 
 ;; (add-hook 'org-src-mode-hook
@@ -292,8 +301,10 @@ than the window-width are displayed with a continuation symbol."
 ;;             (turn-off-fci-mode)))
 
 ;; Reveal.js + Org mode
-(use-package org-re-reveal)
-(setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
+(use-package org-re-reveal
+  :config
+  (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
+  )
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (setq Org-Reveal-title-slide nil)
@@ -317,40 +328,42 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; For jekyll
-(use-package ox-publish :ensure org-plus-contrib)
-(setq org-publish-project-alist
-      '(("org-sdowney"
-         ;; Path to your org files.
-         :base-directory "~/mbig/sdowney/sdowney/org"
-         :base-extension "org"
+(use-package ox-publish
+  :ensure org-plus-contrib
+  :config
+  (setq org-publish-project-alist
+        '(("org-sdowney"
+           ;; Path to your org files.
+           :base-directory "~/mbig/sdowney/sdowney/org"
+           :base-extension "org"
 
-         ;; Path to your Jekyll project.
-         :publishing-directory "~/mbig/sdowney/sdowney/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :html-extension "html"
-         :section-numbers nil
-         :headline-levels 4
-         :table-of-contents t
-         :auto-index nil
-         :auto-preamble nil
-         :body-only t) ;; Only export section between <body> </body>
+           ;; Path to your Jekyll project.
+           :publishing-directory "~/mbig/sdowney/sdowney/"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 4
+           :html-extension "html"
+           :section-numbers nil
+           :headline-levels 4
+           :table-of-contents t
+           :auto-index nil
+           :auto-preamble nil
+           :body-only t) ;; Only export section between <body> </body>
 
-        ("org-static-sdowney"
-         :base-directory "~/mbig/sdowney/sdowney/org/"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-         :publishing-directory "~/mbig/sdowney/sdowney/"
-         :recursive t
-         :publishing-function org-publish-attachment
-         :table-of-contents nil)
+          ("org-static-sdowney"
+           :base-directory "~/mbig/sdowney/sdowney/org/"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+           :publishing-directory "~/mbig/sdowney/sdowney/"
+           :recursive t
+           :publishing-function org-publish-attachment
+           :table-of-contents nil)
 
-        ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
+          ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
 
-
+  )
 ;; clone buffer into new frame
-(defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
-  "Like `clone-indirect-buffer' but display in a new frame."
+  (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
+    "Like `clone-indirect-buffer' but display in a new frame."
   (interactive
    (progn
      (if (get major-mode 'no-clone-indirect)
@@ -401,20 +414,22 @@ than the window-width are displayed with a continuation symbol."
                    (c-set-style "llvm.org"))))))
 
 
-(use-package org2blog)
-;; Don't use sourcecode tags in wordpress
-(setq org2blog/wp-use-sourcecode-shortcode nil)
-;; Default parameters for sourcecode tag
-(setq org2blog/wp-sourcecode-default-params nil)
+(use-package org2blog
+  :config
+  ;; Don't use sourcecode tags in wordpress
+  (setq org2blog/wp-use-sourcecode-shortcode nil)
+  ;; Default parameters for sourcecode tag
+  (setq org2blog/wp-sourcecode-default-params nil)
 
-(setq org2blog/wp-blog-alist
-      '(("sdowney"
-         :url "http://www.sdowney.org/wordpress/xmlrpc.php"
-         :username "sdowney"
-         :default-title "Hello World"
-         :default-categories ("org2blog" "emacs")
-         :tags-as-categories nil)
-        ))
+  (setq org2blog/wp-blog-alist
+        '(("sdowney"
+           :url "http://www.sdowney.org/wordpress/xmlrpc.php"
+           :username "sdowney"
+           :default-title "Hello World"
+           :default-categories ("org2blog" "emacs")
+           :tags-as-categories nil)
+          ))
+  )
 
 
 ;; (use-package lsp-clangd
