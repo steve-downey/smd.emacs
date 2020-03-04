@@ -1,3 +1,9 @@
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (require 'use-package))
+
+
 ;; further customization, not part of default
 (require 'smd)
 
@@ -5,7 +11,7 @@
   (windmove-default-keybindings 'meta))
 
 
-(require 'google-c-style)
+(use-package google-c-style)
 
 ;; I like to know what time it is. These lines show the clock in
 ;; the status bar. Comment out first line if you prefer to show
@@ -18,8 +24,8 @@
 ;; Show trailing white spaces
 (setq-default show-trailing-whitespace t)
 
-(require 'calc)
-(require 'calc-ext)
+(use-package calc)
+(use-package calc-ext :ensure nil)
 (defvar calc-command-flags)
 
 
@@ -83,7 +89,7 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;;color escape sequence support in shell mode
-(require 'ansi-color)
+(use-package ansi-color)
 
 
 
@@ -97,6 +103,7 @@ than the window-width are displayed with a continuation symbol."
              (?m (file . ,"/bb/mbig/mbig77/msgsvn/trunk/msgbig/msgbig_objects.list"))
              (?p (file . ,"~/.profile"))
              (?b (file . ,"~/.bashrc"))
+             (?a (file . ,(locate-user-emacs-file "after-init.el")))
              ))
   (set-register (car r) (cadr r)))
 
@@ -132,13 +139,13 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'comint-output-filter-functions
           'comint-truncate-buffer)
 
-;; Clean up unused buffers after 3 days
-(require 'midnight)
-(setq clean-buffer-list-delay-general 3)
+;; Clean up unused buffers after 8 days
+(use-package midnight)
+(setq clean-buffer-list-delay-general 8)
 
 
 
-(require 'newcomment)
+(use-package newcomment :ensure nil)
 (setq comment-auto-fill-only-comments 1)
 
 
@@ -152,8 +159,10 @@ than the window-width are displayed with a continuation symbol."
 
 ;; TRAMP config
 
-(setq tramp-default-method "ssh")
-(require 'tramp nil 'noerror)
+(use-package tramp
+  :init
+  (setq tramp-default-method "ssh")
+  )
 
 
 ;; ;; after mouse selection in X11 apps, you can paste by `yank' in emacs
@@ -165,9 +174,11 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; clang format
-(require 'clang-format)
-(global-set-key [C-tab] 'clang-format-region)
-(global-set-key (kbd "C-c f") 'clang-format-region)
+(use-package clang-format
+  :bind ("C-c f" . 'clang-format-region)
+  )
+;;(global-set-key [C-tab] 'clang-format-region)
+;;(global-set-key (kbd "C-c f") 'clang-format-region)
 (global-set-key (kbd "C-x \\") 'align-entire)
 
 (setq user-mail-address "sdowney@sdowney.org")
@@ -207,8 +218,10 @@ than the window-width are displayed with a continuation symbol."
   (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
   )
 
-(require 'find-dired)
-(setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+(use-package find-dired
+  :init
+  (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+  )
 
 
 ;; ;; DAEMON MODE
@@ -220,9 +233,9 @@ than the window-width are displayed with a continuation symbol."
 ;;   (load-theme exordium-theme t))
 
 ;;; SERVER MODE
-(require 'server)
+(use-package server)
 (if (server-running-p)
-    (load-theme 'solarized-light t)
+    (load-theme 'tomorrow-night-blue t)
   (setq confirm-kill-emacs #'yes-or-no-p)
   (server-start)
   (global-set-key (kbd "C-x C-3") 'server-edit))
@@ -240,17 +253,17 @@ than the window-width are displayed with a continuation symbol."
 
 ;; (setq org-completion-use-ido t)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '( (perl . t)
-    (ruby . t)
-    (shell . t)
-    (python . t)
-    (emacs-lisp . t)
-    (C . t)
-    (R . t)
-    (latex . t)
-    ))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '( (perl . t)
+;;     (ruby . t)
+;;     (shell . t)
+;;     (python . t)
+;;     (emacs-lisp . t)
+;;     (C . t)
+;;     (R . t)
+;;     (latex . t)
+;;     ))
 
 (setq org-support-shift-select 'always)
 
@@ -262,31 +275,36 @@ than the window-width are displayed with a continuation symbol."
 ;; (setq org-src-preserve-indentation t)
 
 
-(setq org-capture-templates
-      '(
-        ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
-        ))
 
-(setq reftex-default-bibliography '("~/org/ref.bib"))
+(use-package org-ref
+  :config
+  (setq org-capture-templates
+        '(
+          ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
+          ))
 
-(setq org-ref-bibliography-notes "~/org/notes.org"
-      org-ref-default-bibliography '("~/org/ref.bib")
-      org-ref-pdf-directory "~/org/bibtex-pdfs/")
+  (setq reftex-default-bibliography '("~/org/ref.bib"))
 
-(setq bibtex-completion-bibliography "~/org/ref.bib"
-      bibtex-completion-library-path "~/org/bibtex-pdfs"
-      bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+  (setq org-ref-bibliography-notes "~/org/notes.org"
+        org-ref-default-bibliography '("~/org/ref.bib")
+        org-ref-pdf-directory "~/org/bibtex-pdfs/")
 
-(require 'org-ref)
-(require 'ox-bibtex)
+  (setq bibtex-completion-bibliography "~/org/ref.bib"
+        bibtex-completion-library-path "~/org/bibtex-pdfs"
+        bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+  )
+
+(use-package ox-bibtex :ensure org-plus-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
 ;;             (turn-off-fci-mode)))
 
 ;; Reveal.js + Org mode
-(require 'org-re-reveal)
-(setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
+(use-package org-re-reveal
+  :config
+  (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
+  )
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (setq Org-Reveal-title-slide nil)
@@ -301,49 +319,51 @@ than the window-width are displayed with a continuation symbol."
 (defun powerline ()
   "Enable powerline"
   (interactive)
-  (require 'powerline)
+  (use-package powerline)
   (powerline-set-selected-window)
-  (require 'init-powerline)
+  (use-package init-powerline :ensure nil)
   (redraw-display))
 
 (run-with-idle-timer 1 nil #'powerline)
 
 
 ;; For jekyll
-(require 'ox-publish)
-(setq org-publish-project-alist
-      '(("org-sdowney"
-         ;; Path to your org files.
-         :base-directory "~/mbig/sdowney/sdowney/org"
-         :base-extension "org"
+(use-package ox-publish
+  :ensure org-plus-contrib
+  :config
+  (setq org-publish-project-alist
+        '(("org-sdowney"
+           ;; Path to your org files.
+           :base-directory "~/mbig/sdowney/sdowney/org"
+           :base-extension "org"
 
-         ;; Path to your Jekyll project.
-         :publishing-directory "~/mbig/sdowney/sdowney/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :html-extension "html"
-         :section-numbers nil
-         :headline-levels 4
-         :table-of-contents t
-         :auto-index nil
-         :auto-preamble nil
-         :body-only t) ;; Only export section between <body> </body>
+           ;; Path to your Jekyll project.
+           :publishing-directory "~/mbig/sdowney/sdowney/"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 4
+           :html-extension "html"
+           :section-numbers nil
+           :headline-levels 4
+           :table-of-contents t
+           :auto-index nil
+           :auto-preamble nil
+           :body-only t) ;; Only export section between <body> </body>
 
-        ("org-static-sdowney"
-         :base-directory "~/mbig/sdowney/sdowney/org/"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-         :publishing-directory "~/mbig/sdowney/sdowney/"
-         :recursive t
-         :publishing-function org-publish-attachment
-         :table-of-contents nil)
+          ("org-static-sdowney"
+           :base-directory "~/mbig/sdowney/sdowney/org/"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+           :publishing-directory "~/mbig/sdowney/sdowney/"
+           :recursive t
+           :publishing-function org-publish-attachment
+           :table-of-contents nil)
 
-        ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
+          ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
 
-
+  )
 ;; clone buffer into new frame
-(defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
-  "Like `clone-indirect-buffer' but display in a new frame."
+  (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
+    "Like `clone-indirect-buffer' but display in a new frame."
   (interactive
    (progn
      (if (get major-mode 'no-clone-indirect)
@@ -394,20 +414,22 @@ than the window-width are displayed with a continuation symbol."
                    (c-set-style "llvm.org"))))))
 
 
-(require 'org2blog)
-;; Don't use sourcecode tags in wordpress
-(setq org2blog/wp-use-sourcecode-shortcode nil)
-;; Default parameters for sourcecode tag
-(setq org2blog/wp-sourcecode-default-params nil)
+(use-package org2blog
+  :config
+  ;; Don't use sourcecode tags in wordpress
+  (setq org2blog/wp-use-sourcecode-shortcode nil)
+  ;; Default parameters for sourcecode tag
+  (setq org2blog/wp-sourcecode-default-params nil)
 
-(setq org2blog/wp-blog-alist
-      '(("sdowney"
-         :url "http://www.sdowney.org/wordpress/xmlrpc.php"
-         :username "sdowney"
-         :default-title "Hello World"
-         :default-categories ("org2blog" "emacs")
-         :tags-as-categories nil)
-        ))
+  (setq org2blog/wp-blog-alist
+        '(("sdowney"
+           :url "http://www.sdowney.org/wordpress/xmlrpc.php"
+           :username "sdowney"
+           :default-title "Hello World"
+           :default-categories ("org2blog" "emacs")
+           :tags-as-categories nil)
+          ))
+  )
 
 
 ;; (use-package lsp-clangd
@@ -418,12 +440,43 @@ than the window-width are displayed with a continuation symbol."
 ;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
 ;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
 
-(require 'eglot)
+(use-package eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(delete 'company-clang company-backends)
+
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(require 'ox-extra)
+(use-package ox-extra :ensure org-plus-contrib)
 (ox-extras-activate '(ignore-headlines))
 
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+
+(with-eval-after-load 'flycheck
+  (require 'flycheck-clang-analyzer)
+  (flycheck-clang-analyzer-setup))
+
+
+(defun package-reinstall-all-activated-packages ()
+  "Refresh and reinstall all activated packages."
+  (interactive)
+  (package-refresh-contents)
+  (dolist (package-name package-activated-list)
+    (when (package-installed-p package-name)
+      (unless (ignore-errors                   ;some packages may fail to install
+                (package-reinstall package-name))
+        (warn "Package %s failed to reinstall" package-name)))))
+
+(setq markdown-command
+      (concat
+       "~/.local/bin/pandoc"
+       " --from=markdown --to=html"
+       " --standalone --mathjax --highlight-style=pygments"))
+
+;;(use-package haskell-mode
+;;  :hook prog-mode)
+
+(use-package forge
+  :after magit)
 ;;; End of file
