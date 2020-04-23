@@ -440,22 +440,22 @@ than the window-width are displayed with a continuation symbol."
 ;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
 ;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
 
-(use-package eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(delete 'company-clang company-backends)
+;; (use-package eglot)
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;; (delete 'company-clang company-backends)
 
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+;; (add-hook 'c-mode-hook 'eglot-ensure)
+;; (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(use-package ox-extra :ensure org-plus-contrib)
-(ox-extras-activate '(ignore-headlines))
+;; (use-package ox-extra :ensure org-plus-contrib)
+;; (ox-extras-activate '(ignore-headlines))
 
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
-(with-eval-after-load 'flycheck
-  (require 'flycheck-clang-analyzer)
-  (flycheck-clang-analyzer-setup))
+;; (with-eval-after-load 'flycheck
+;;   (require 'flycheck-clang-analyzer)
+;;   (flycheck-clang-analyzer-setup))
 
 
 (defun package-reinstall-all-activated-packages ()
@@ -477,6 +477,24 @@ than the window-width are displayed with a continuation symbol."
 ;;(use-package haskell-mode
 ;;  :hook prog-mode)
 
+;; (use-package forge
+;;   :after magit)
+
 (use-package forge
-  :after magit)
+  :after magit
+  :config
+  (add-to-list 'forge-alist
+               '("bbgithub.dev.bloomberg.com"
+                 "bbgithub.dev.bloomberg.com/api/v3"
+                 "bbgithub.dev.bloomberg.com"
+                 forge-github-repository)))
+
+;; Helm config
+(use-package helm
+  :demand t
+  :bind (:map helm-map
+              ("<tab>" . helm-execute-persistent-action)
+              ("C-z" . helm-select-action)))
+
+
 ;;; End of file
