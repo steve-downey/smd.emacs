@@ -1,5 +1,5 @@
 (require 'assoc)
-(require 'cl)
+(require 'cl-lib)
 
 (defvar smd:fonts
   '("Source Code Pro"

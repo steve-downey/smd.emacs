@@ -5,7 +5,7 @@
 
 
 ;; further customization, not part of default
-(require 'smd)
+;;(require 'smd)
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings 'meta))
@@ -166,7 +166,7 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; ;; after mouse selection in X11 apps, you can paste by `yank' in emacs
-(setq x-select-enable-primary t)
+(setq select-enable-primary t)
 (setq mouse-drag-copy-region nil)
 (setq select-active-regions nil)
 
@@ -440,22 +440,22 @@ than the window-width are displayed with a continuation symbol."
 ;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
 ;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
 
-(use-package eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(delete 'company-clang company-backends)
+;; (use-package eglot)
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;; (delete 'company-clang company-backends)
 
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+;; (add-hook 'c-mode-hook 'eglot-ensure)
+;; (add-hook 'c++-mode-hook 'eglot-ensure)
 
 (use-package ox-extra :ensure org-plus-contrib)
 (ox-extras-activate '(ignore-headlines))
 
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
 
-(with-eval-after-load 'flycheck
-  (require 'flycheck-clang-analyzer)
-  (flycheck-clang-analyzer-setup))
+;; (with-eval-after-load 'flycheck
+;;   (require 'flycheck-clang-analyzer)
+;;   (flycheck-clang-analyzer-setup))
 
 
 (defun package-reinstall-all-activated-packages ()

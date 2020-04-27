@@ -58,3 +58,5 @@
 (setq exordium-use-variable-pitch t)
 
 (setq exordium-complete-mode :company)
+
+(setq exordium-rtags-syntax-checker :flycheck)
