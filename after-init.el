@@ -447,8 +447,8 @@ than the window-width are displayed with a continuation symbol."
 ;; (add-hook 'c-mode-hook 'eglot-ensure)
 ;; (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(use-package ox-extra :ensure org-plus-contrib)
-(ox-extras-activate '(ignore-headlines))
+;; (use-package ox-extra :ensure org-plus-contrib)
+;; (ox-extras-activate '(ignore-headlines))
 
 ;; (eval-after-load 'flycheck
 ;;   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
@@ -477,6 +477,24 @@ than the window-width are displayed with a continuation symbol."
 ;;(use-package haskell-mode
 ;;  :hook prog-mode)
 
+;; (use-package forge
+;;   :after magit)
+
 (use-package forge
-  :after magit)
+  :after magit
+  :config
+  (add-to-list 'forge-alist
+               '("bbgithub.dev.bloomberg.com"
+                 "bbgithub.dev.bloomberg.com/api/v3"
+                 "bbgithub.dev.bloomberg.com"
+                 forge-github-repository)))
+
+;; Helm config
+(use-package helm
+  :demand t
+  :bind (:map helm-map
+              ("<tab>" . helm-execute-persistent-action)
+              ("C-z" . helm-select-action)))
+
+
 ;;; End of file

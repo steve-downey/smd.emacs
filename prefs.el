@@ -60,3 +60,5 @@
 (setq exordium-complete-mode :company)
 
 (setq exordium-rtags-syntax-checker :flycheck)
+
+(setq exordium-helm-everywhere t)
