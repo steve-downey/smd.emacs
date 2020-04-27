@@ -61,4 +61,4 @@
 
 (setq exordium-rtags-syntax-checker :flycheck)
 
-(setq exordium-helm-everywhere t)
+;;(setq exordium-helm-everywhere t)
