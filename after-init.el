@@ -435,7 +435,6 @@ than the window-width are displayed with a continuation symbol."
   (setq org2blog/wp-use-sourcecode-shortcode nil)
   ;; Default parameters for sourcecode tag
   (setq org2blog/wp-sourcecode-default-params nil)
-
   (setq org2blog/wp-image-upload t)
   (setq org2blog/wp-blog-alist
         '(("sdowney"
@@ -549,4 +548,6 @@ than the window-width are displayed with a continuation symbol."
                                   :install "cmake --build build --target install"
                                   :package "cmake --build build --target package")
 
+
+(use-package haskell-mode)
 ;;; End of file
