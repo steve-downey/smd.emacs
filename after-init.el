@@ -431,9 +431,10 @@ than the window-width are displayed with a continuation symbol."
   ;; Default parameters for sourcecode tag
   (setq org2blog/wp-sourcecode-default-params nil)
 
+  (setq org2blog/wp-image-upload t)
   (setq org2blog/wp-blog-alist
         '(("sdowney"
-           :url "http://www.sdowney.org/wordpress/xmlrpc.php"
+           :url "http://www.sdowney.org/xmlrpc.php"
            :username "sdowney"
            :default-title "Hello World"
            :default-categories ("org2blog" "emacs")
