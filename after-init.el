@@ -315,6 +315,11 @@ than the window-width are displayed with a continuation symbol."
   :config
   (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
   )
+;; (require 'oer-reveal-publish)
+;; (oer-reveal-setup-submodules t)
+;; (oer-reveal-generate-include-files t)
+;; (oer-reveal-publish-setq-defaults)
+
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (setq Org-Reveal-title-slide nil)
