@@ -264,6 +264,16 @@ than the window-width are displayed with a continuation symbol."
 ;;     (R . t)
 ;;     (latex . t)
 ;;     ))
+(use-package graphviz-dot-mode
+  :config
+  (setq graphviz-dot-indent-width 4))
+
+(use-package company-graphviz-dot
+  :ensure graphviz-dot-mode)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
 
 (setq org-support-shift-select 'always)
 
