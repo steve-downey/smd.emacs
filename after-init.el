@@ -527,4 +527,20 @@ than the window-width are displayed with a continuation symbol."
 ;; Hide away leading stars on terminal.
 (setq org-superstar-leading-fallback ?\s)
 
+;; Make & CMake
+(projectile-register-project-type 'mymake '("Makefile")
+                                  :project-file "Makefile"
+                                  :compile "make"
+                                  :test "make test"
+                                  :install "make install"
+                                  :test-suffix ".t")
+(projectile-register-project-type 'mycmake '("CMakeLists.txt")
+                                  :project-file "CMakeLists.txt"
+                                  :configure #'projectile--cmake-configure-command
+                                  :compile #'projectile--cmake-compile-command
+                                  :test #'projectile--cmake-test-command
+                                  :test-suffix ".t"
+                                  :install "cmake --build build --target install"
+                                  :package "cmake --build build --target package")
+
 ;;; End of file
