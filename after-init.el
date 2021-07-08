@@ -372,8 +372,8 @@ than the window-width are displayed with a continuation symbol."
 
   )
 ;; clone buffer into new frame
-  (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
-    "Like `clone-indirect-buffer' but display in a new frame."
+(defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
+  "Like `clone-indirect-buffer' but display in a new frame."
   (interactive
    (progn
      (if (get major-mode 'no-clone-indirect)
