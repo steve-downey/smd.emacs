@@ -103,7 +103,7 @@ than the window-width are displayed with a continuation symbol."
              (?m (file . ,"/bb/mbig/mbig77/msgsvn/trunk/msgbig/msgbig_objects.list"))
              (?p (file . ,"~/.profile"))
              (?b (file . ,"~/.bashrc"))
-             (?a (file . ,(locate-user-emacs-file "after-init.el")))
+             (?a (file . ,(locate-user-emacs-file "taps/smd/after-init.el")))
              ))
   (set-register (car r) (cadr r)))
 
@@ -264,6 +264,16 @@ than the window-width are displayed with a continuation symbol."
 ;;     (R . t)
 ;;     (latex . t)
 ;;     ))
+(use-package graphviz-dot-mode
+  :config
+  (setq graphviz-dot-indent-width 4))
+
+(use-package company-graphviz-dot
+  :ensure graphviz-dot-mode)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
 
 (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 (setq plantuml-default-exec-mode 'jar)
@@ -313,6 +323,11 @@ than the window-width are displayed with a continuation symbol."
   :config
   (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
   )
+;; (require 'oer-reveal-publish)
+;; (oer-reveal-setup-submodules t)
+;; (oer-reveal-generate-include-files t)
+;; (oer-reveal-publish-setq-defaults)
+
 ;; (require 'ox-reveal)
 ;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
 ;; (setq Org-Reveal-title-slide nil)
@@ -370,8 +385,8 @@ than the window-width are displayed with a continuation symbol."
 
   )
 ;; clone buffer into new frame
-  (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
-    "Like `clone-indirect-buffer' but display in a new frame."
+(defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
+  "Like `clone-indirect-buffer' but display in a new frame."
   (interactive
    (progn
      (if (get major-mode 'no-clone-indirect)
@@ -428,10 +443,10 @@ than the window-width are displayed with a continuation symbol."
   (setq org2blog/wp-use-sourcecode-shortcode nil)
   ;; Default parameters for sourcecode tag
   (setq org2blog/wp-sourcecode-default-params nil)
-
+  (setq org2blog/wp-image-upload t)
   (setq org2blog/wp-blog-alist
         '(("sdowney"
-           :url "http://www.sdowney.org/wordpress/xmlrpc.php"
+           :url "http://www.sdowney.org/xmlrpc.php"
            :username "sdowney"
            :default-title "Hello World"
            :default-categories ("org2blog" "emacs")
@@ -512,6 +527,35 @@ than the window-width are displayed with a continuation symbol."
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
+(with-eval-after-load 'org-superstar
+  (set-face-attribute 'org-superstar-item nil :height 1.2)
+  (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
+  (set-face-attribute 'org-superstar-leading nil :height 1.3))
+
+;; Set different bullets, with one getting a terminal fallback.
+(setq org-superstar-headline-bullets-list
+      '("◉" ("🞛" ?◈) "○" "▷"))
+;; Stop cycling bullets to emphasize hierarchy of headlines.
+(setq org-superstar-cycle-headline-bullets nil)
+;; Hide away leading stars on terminal.
+(setq org-superstar-leading-fallback ?\s)
+
+;; Make & CMake
+(projectile-register-project-type 'mymake '("Makefile")
+                                  :project-file "Makefile"
+                                  :compile "make"
+                                  :test "make test"
+                                  :install "make install"
+                                  :test-suffix ".t")
+(projectile-register-project-type 'mycmake '("CMakeLists.txt")
+                                  :project-file "CMakeLists.txt"
+                                  :configure #'projectile--cmake-configure-command
+                                  :compile #'projectile--cmake-compile-command
+                                  :test #'projectile--cmake-test-command
+                                  :test-suffix ".t"
+                                  :install "cmake --build build --target install"
+                                  :package "cmake --build build --target package")
+
 (use-package elpy
   :ensure t
   :init
@@ -520,7 +564,6 @@ than the window-width are displayed with a continuation symbol."
   (setq elpy-rpc-python-command "python3")
   (setq python-shell-interpreter "python3"
         python-shell-interpreter-args "-i"))
-
 
 (use-package pylint
   :ensure t)
@@ -531,4 +574,5 @@ than the window-width are displayed with a continuation symbol."
   :commands (sphinx-doc
              sphinx-doc-mode))
 
+(use-package haskell-mode)
 ;;; End of file
