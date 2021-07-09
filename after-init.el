@@ -265,6 +265,14 @@ than the window-width are displayed with a continuation symbol."
 ;;     (latex . t)
 ;;     ))
 
+(setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+
+(setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+
+
 (setq org-support-shift-select 'always)
 
 ;; Do not prompt to confirm evaluation
