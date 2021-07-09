@@ -512,4 +512,23 @@ than the window-width are displayed with a continuation symbol."
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  :config
+  (setq elpy-rpc-python-command "python3")
+  (setq python-shell-interpreter "python3"
+        python-shell-interpreter-args "-i"))
+
+
+(use-package pylint
+  :ensure t)
+
+(use-package sphinx-doc
+  :hook ((python-mode . sphinx-doc-mode))
+  :diminish sphinx-doc-mode
+  :commands (sphinx-doc
+             sphinx-doc-mode))
+
 ;;; End of file
