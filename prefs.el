@@ -23,7 +23,7 @@
         ("IBM Plex Mono" . 110)
         ))
 
-(setq exordium-display-line-numbers nil)
+(setq exordium-display-line-numbers t)
 
 (setq exordium-theme 'zenburn)
 
