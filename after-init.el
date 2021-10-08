@@ -293,7 +293,7 @@ than the window-width are displayed with a continuation symbol."
 ;; (setq org-src-preserve-indentation t)
 
 
-
+(use-package org-contrib)
 (use-package org-ref
   :config
   (setq org-capture-templates
@@ -312,7 +312,7 @@ than the window-width are displayed with a continuation symbol."
         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
   )
 
-(use-package ox-bibtex :ensure org-plus-contrib)
+(use-package ox-bibtex)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
@@ -352,7 +352,7 @@ than the window-width are displayed with a continuation symbol."
 
 ;; For jekyll
 (use-package ox-publish
-  :ensure org-plus-contrib
+  :ensure org
   :config
   (setq org-publish-project-alist
         '(("org-sdowney"
@@ -532,9 +532,9 @@ than the window-width are displayed with a continuation symbol."
   (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
   (set-face-attribute 'org-superstar-leading nil :height 1.3))
 
-;; Set different bullets, with one getting a terminal fallback.
+;; Set different bullets
 (setq org-superstar-headline-bullets-list
-      '("◉" ("🞛" ?◈) "○" "▷"))
+      '("◉" "◈" "○" "▷"))
 ;; Stop cycling bullets to emphasize hierarchy of headlines.
 (setq org-superstar-cycle-headline-bullets nil)
 ;; Hide away leading stars on terminal.
