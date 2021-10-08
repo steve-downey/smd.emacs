@@ -575,4 +575,7 @@ than the window-width are displayed with a continuation symbol."
              sphinx-doc-mode))
 
 (use-package haskell-mode)
+
+(add-hook 'after-save-hook
+          'executable-make-buffer-file-executable-if-script-p)
 ;;; End of file
