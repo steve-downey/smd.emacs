@@ -234,6 +234,7 @@ than the window-width are displayed with a continuation symbol."
 
 ;;; SERVER MODE
 (use-package server)
+
 (if (server-running-p)
     (load-theme 'tomorrow-night-blue t)
   (setq confirm-kill-emacs #'yes-or-no-p)
@@ -503,5 +504,21 @@ than the window-width are displayed with a continuation symbol."
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  (setq elpy-rpc-python-command "python3.7"))
+
+(use-package esup
+  :ensure t
+  ;; To use MELPA Stable use ":pin mepla-stable",
+  :pin melpa
+  :commands (esup))
+
+(use-package pylint
+  :ensure t)
 
 ;;; End of file
