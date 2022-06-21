@@ -162,6 +162,7 @@ than the window-width are displayed with a continuation symbol."
 (use-package tramp
   :init
   (setq tramp-default-method "ssh")
+  (setq tramp-use-ssh-controlmaster-options nil)
   )
 
 
@@ -293,26 +294,26 @@ than the window-width are displayed with a continuation symbol."
 ;; (setq org-src-preserve-indentation t)
 
 
-(use-package org-contrib)
-(use-package org-ref
-  :config
-  (setq org-capture-templates
-        '(
-          ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
-          ))
+;; (use-package org-contrib)
+;; (use-package org-ref
+;;   :config
+;;   (setq org-capture-templates
+;;         '(
+;;           ("c" "BibTex" plain (file "~/org/ref.bib") "\n\n\n\n%?")
+;;           ))
 
-  (setq reftex-default-bibliography '("~/org/ref.bib"))
+;;   (setq reftex-default-bibliography '("~/org/ref.bib"))
 
-  (setq org-ref-bibliography-notes "~/org/notes.org"
-        org-ref-default-bibliography '("~/org/ref.bib")
-        org-ref-pdf-directory "~/org/bibtex-pdfs/")
+;;   (setq org-ref-bibliography-notes "~/org/notes.org"
+;;         org-ref-default-bibliography '("~/org/ref.bib")
+;;         org-ref-pdf-directory "~/org/bibtex-pdfs/")
 
-  (setq bibtex-completion-bibliography "~/org/ref.bib"
-        bibtex-completion-library-path "~/org/bibtex-pdfs"
-        bibtex-completion-notes-path "~/org/helm-bibtex-notes")
-  )
+;;   (setq bibtex-completion-bibliography "~/org/ref.bib"
+;;         bibtex-completion-library-path "~/org/bibtex-pdfs"
+;;         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
+;;   )
 
-(use-package ox-bibtex)
+;; (use-package ox-bibtex)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
@@ -350,40 +351,40 @@ than the window-width are displayed with a continuation symbol."
 (run-with-idle-timer 1 nil #'powerline)
 
 
-;; For jekyll
-(use-package ox-publish
-  :ensure org
-  :config
-  (setq org-publish-project-alist
-        '(("org-sdowney"
-           ;; Path to your org files.
-           :base-directory "~/mbig/sdowney/sdowney/org"
-           :base-extension "org"
+;; ;; For jekyll
+;; (use-package ox-publish
+;;   :ensure org
+;;   :config
+;;   (setq org-publish-project-alist
+;;         '(("org-sdowney"
+;;            ;; Path to your org files.
+;;            :base-directory "~/mbig/sdowney/sdowney/org"
+;;            :base-extension "org"
 
-           ;; Path to your Jekyll project.
-           :publishing-directory "~/mbig/sdowney/sdowney/"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :headline-levels 4
-           :html-extension "html"
-           :section-numbers nil
-           :headline-levels 4
-           :table-of-contents t
-           :auto-index nil
-           :auto-preamble nil
-           :body-only t) ;; Only export section between <body> </body>
+;;            ;; Path to your Jekyll project.
+;;            :publishing-directory "~/mbig/sdowney/sdowney/"
+;;            :recursive t
+;;            :publishing-function org-html-publish-to-html
+;;            :headline-levels 4
+;;            :html-extension "html"
+;;            :section-numbers nil
+;;            :headline-levels 4
+;;            :table-of-contents t
+;;            :auto-index nil
+;;            :auto-preamble nil
+;;            :body-only t) ;; Only export section between <body> </body>
 
-          ("org-static-sdowney"
-           :base-directory "~/mbig/sdowney/sdowney/org/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-           :publishing-directory "~/mbig/sdowney/sdowney/"
-           :recursive t
-           :publishing-function org-publish-attachment
-           :table-of-contents nil)
+;;           ("org-static-sdowney"
+;;            :base-directory "~/mbig/sdowney/sdowney/org/"
+;;            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+;;            :publishing-directory "~/mbig/sdowney/sdowney/"
+;;            :recursive t
+;;            :publishing-function org-publish-attachment
+;;            :table-of-contents nil)
 
-          ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
+;;           ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
 
-  )
+;;   )
 ;; clone buffer into new frame
 (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
   "Like `clone-indirect-buffer' but display in a new frame."
@@ -514,14 +515,12 @@ than the window-width are displayed with a continuation symbol."
 
 ;; Helm config
 (use-package helm
-  :demand t
   :bind (:map helm-map
               ("<tab>" . helm-execute-persistent-action)
               ("C-z" . helm-select-action)))
 
 
 (use-package projectile
-  :ensure t
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
@@ -557,7 +556,6 @@ than the window-width are displayed with a continuation symbol."
                                   :package "cmake --build build --target package")
 
 (use-package elpy
-  :ensure t
   :init
   (elpy-enable)
   :config
@@ -565,8 +563,7 @@ than the window-width are displayed with a continuation symbol."
   (setq python-shell-interpreter "python3"
         python-shell-interpreter-args "-i"))
 
-(use-package pylint
-  :ensure t)
+(use-package pylint)
 
 (use-package sphinx-doc
   :hook ((python-mode . sphinx-doc-mode))
@@ -574,8 +571,14 @@ than the window-width are displayed with a continuation symbol."
   :commands (sphinx-doc
              sphinx-doc-mode))
 
+
 (use-package haskell-mode)
+
+(use-package rust-mode)
 
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
+
+;; (add-hook 'compilation-mode-hook 'ansi-color-compilation-filter)
+
 ;;; End of file
