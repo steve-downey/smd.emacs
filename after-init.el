@@ -313,7 +313,8 @@ than the window-width are displayed with a continuation symbol."
 ;;         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
 ;;   )
 
-;; (use-package ox-bibtex)
+(use-package ox-bibtex
+  :ensure org-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
@@ -580,5 +581,58 @@ than the window-width are displayed with a continuation symbol."
           'executable-make-buffer-file-executable-if-script-p)
 
 ;; (add-hook 'compilation-mode-hook 'ansi-color-compilation-filter)
+
+(use-package org-special-block-extras
+  :ensure t
+  :hook (org-mode . org-special-block-extras-mode)
+  ;; All relevant Lisp functions are prefixed ‘o-’; e.g., `o-docs-insert'.
+  :custom
+  (o-docs-libraries
+   '("~/org-special-block-extras/documentation.org")
+   "The places where I keep my ‘#+documentation’"))
+
+
+(eval-after-load "ox-latex"
+  '(add-to-list 'org-latex-classes
+                '("memoir" "\\documentclass{memoir}"
+                  ("\\section{%s}" . "\\section*{%s}")
+                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(setq org-latex-default-packages-alist
+      '(("AUTO" "inputenc" t
+        ("pdflatex"))
+       ("T1" "fontenc" t
+        ("pdflatex"))
+       ("" "graphicx" t)
+       ("" "longtable" nil)
+       ("" "wrapfig" nil)
+       ("" "rotating" nil)
+       ("normalem" "ulem" t)
+       ("" "amsmath" t)
+       ("" "amssymb" t)
+       ("" "capt-of" nil)
+       ("" "titletoc" nil)
+       ("" "hyperref" nil)))
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode
+  ("Dockerfile\\'" . dockerfile-mode)
+  :config
+  (setq-default docker-use-sudo nil))
+
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
+(use-package edit-indirect)
+
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;;; End of file

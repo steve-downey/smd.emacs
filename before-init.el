@@ -3,8 +3,8 @@
 (when (getenv "BBENV")
   (setq exordium-bloomberg 't))
 
-(require 'package)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+;; (require 'package)
+;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 
 ;; (setq exordium-extra-packages
