@@ -25,7 +25,7 @@
 
 (setq exordium-display-line-numbers t)
 
-(setq exordium-theme 'zenburn)
+(setq exordium-theme nil)
 
 (setq exordium-enable-cua-mode :region)
 
