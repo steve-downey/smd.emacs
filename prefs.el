@@ -1,5 +1,6 @@
 (setq exordium-preferred-fonts
       '(
+        ("JetBrains Mono" . 140)
         ("Source Code Pro" . 140)
         ("Roboto Mono" . 100)
         ("Inconsolata" . 120)
@@ -9,6 +10,8 @@
         ("Droid Sans Mono" . 120)
         ("Source Code Pro Bold" . 120)
         ("Source Code Pro Black" . 120)
+        ("JetBrains Mono Bold" . 140)
+        ("JetBrains Mono Thin" . 140)
         ("Lucida Sans Typewriter" . 120)
 ;        ("lucidatypewriter" . 120)
         ("Anonymous Pro" . 120)
