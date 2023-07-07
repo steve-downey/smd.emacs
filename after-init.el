@@ -314,7 +314,8 @@ than the window-width are displayed with a continuation symbol."
 ;;         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
 ;;   )
 
-;; (use-package ox-bibtex)
+(use-package ox-bibtex
+  :ensure org-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
@@ -509,6 +510,11 @@ than the window-width are displayed with a continuation symbol."
   :after magit
   :config
   (add-to-list 'forge-alist
+               '("bbgithub"
+                 "bbgithub.dev.bloomberg.com/api/v3"
+                 "bbgithub.dev.bloomberg.com"
+                 forge-github-repository))
+  (add-to-list 'forge-alist
                '("bbgithub.dev.bloomberg.com"
                  "bbgithub.dev.bloomberg.com/api/v3"
                  "bbgithub.dev.bloomberg.com"
@@ -597,5 +603,109 @@ than the window-width are displayed with a continuation symbol."
           'executable-make-buffer-file-executable-if-script-p)
 
 ;; (add-hook 'compilation-mode-hook 'ansi-color-compilation-filter)
+
+(use-package org-special-block-extras
+  :ensure t
+  :hook (org-mode . org-special-block-extras-mode)
+  ;; All relevant Lisp functions are prefixed ‘o-’; e.g., `o-docs-insert'.
+  :custom
+  (o-docs-libraries
+   '("~/org-special-block-extras/documentation.org")
+   "The places where I keep my ‘#+documentation’"))
+
+
+(eval-after-load "ox-latex"
+  '(add-to-list 'org-latex-classes
+                '("memoir" "\\documentclass{memoir}"
+                  ("\\section{%s}" . "\\section*{%s}")
+                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(setq org-latex-default-packages-alist
+      '(("AUTO" "inputenc" t
+        ("pdflatex"))
+       ("T1" "fontenc" t
+        ("pdflatex"))
+       ("" "graphicx" t)
+       ("" "longtable" nil)
+       ("" "wrapfig" nil)
+       ("" "rotating" nil)
+       ("normalem" "ulem" t)
+       ("" "amsmath" t)
+       ("" "amssymb" t)
+       ("" "capt-of" nil)
+       ("" "titletoc" nil)
+       ("" "hyperref" nil)))
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode
+  ("Dockerfile\\'" . dockerfile-mode)
+  :config
+  (setq-default docker-use-sudo nil))
+
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
+(use-package edit-indirect)
+
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
+(use-package xterm-color
+  :config
+  (setq comint-output-filter-functions
+        (remove 'ansi-color-process-output comint-output-filter-functions))
+
+  (add-hook 'shell-mode-hook
+            (lambda () (add-hook 'comint-preoutput-filter-functions
+                                 'xterm-color-filter nil t)))
+  (setq compilation-environment '("TERM=xterm-256color"))
+
+  (defun my/advice-compilation-filter (f proc string)
+    (funcall f proc (xterm-color-filter string)))
+
+  (advice-add 'compilation-filter :around #'my/advice-compilation-filter)
+  )
+
+
+(use-package code-review :ensure t
+  :after magit
+  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
+  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
+                                    ("C-c p" . #'code-review-comment-jump-previous)))
+
+  :config
+  (setq code-review-auth-login-marker 'forge)
+  (setq code-review-fill-column 80)
+  (add-hook 'code-review-mode-hook #'emojify-mode)
+  )
+
+
+(defun bb-open-devx-space-ssh ()
+  (interactive)
+  (setq ssh-string (read-string "Spaces ssh string: " nil nil ""))
+  (save-match-data
+    (and (string-match "ssh -t\s\\([-a-z0-9]+\\).* -it \\([a-z0-9]+\\) bash\"" ssh-string)
+         (setq spaces-host (match-string 1 ssh-string)
+               docker-id (match-string 2 ssh-string)
+               )
+         )
+    )
+  (setq space (format "/ssh:%s.dev.bloomberg.com|docker:%s:.."
+                      spaces-host
+                      docker-id
+                      )
+        )
+  (message space)
+  (dired space)
+  )
+
+(global-set-key (kbd "C-c C-j s") 'bb-open-devx-space-ssh)
 
 ;;; End of file
