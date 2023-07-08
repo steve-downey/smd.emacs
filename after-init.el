@@ -225,14 +225,6 @@ than the window-width are displayed with a continuation symbol."
   )
 
 
-;; ;; DAEMON MODE
-;; (if (daemonp)
-;;     (add-hook 'after-make-frame-functions
-;;               (lambda (frame)
-;;                 (with-selected-frame frame
-;;                   (load-theme exordium-theme t))))
-;;   (load-theme exordium-theme t))
-
 ;;; SERVER MODE
 (use-package server)
 
@@ -249,29 +241,10 @@ than the window-width are displayed with a continuation symbol."
 (setq show-help-function nil)
 
 
-;; ;; org-mode and babel config
-;; (eval-after-load "org"
-;;   '(require 'ox-md nil t))
-
-;; (setq org-completion-use-ido t)
-
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;  '( (perl . t)
-;;     (ruby . t)
-;;     (shell . t)
-;;     (python . t)
-;;     (emacs-lisp . t)
-;;     (C . t)
-;;     (R . t)
-;;     (latex . t)
-;;     ))
 (use-package graphviz-dot-mode
   :config
   (setq graphviz-dot-indent-width 4))
 
-(use-package company-graphviz-dot
-  :ensure graphviz-dot-mode)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -353,40 +326,7 @@ than the window-width are displayed with a continuation symbol."
 (run-with-idle-timer 1 nil #'powerline)
 
 
-;; ;; For jekyll
-;; (use-package ox-publish
-;;   :ensure org
-;;   :config
-;;   (setq org-publish-project-alist
-;;         '(("org-sdowney"
-;;            ;; Path to your org files.
-;;            :base-directory "~/mbig/sdowney/sdowney/org"
-;;            :base-extension "org"
 
-;;            ;; Path to your Jekyll project.
-;;            :publishing-directory "~/mbig/sdowney/sdowney/"
-;;            :recursive t
-;;            :publishing-function org-html-publish-to-html
-;;            :headline-levels 4
-;;            :html-extension "html"
-;;            :section-numbers nil
-;;            :headline-levels 4
-;;            :table-of-contents t
-;;            :auto-index nil
-;;            :auto-preamble nil
-;;            :body-only t) ;; Only export section between <body> </body>
-
-;;           ("org-static-sdowney"
-;;            :base-directory "~/mbig/sdowney/sdowney/org/"
-;;            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-;;            :publishing-directory "~/mbig/sdowney/sdowney/"
-;;            :recursive t
-;;            :publishing-function org-publish-attachment
-;;            :table-of-contents nil)
-
-;;           ("sdowney" :components ("org-sdowney" "org-static-sdowney"))))
-
-;;   )
 ;; clone buffer into new frame
 (defun clone-indirect-buffer-new-frame (newname display-flag &optional norecord)
   "Like `clone-indirect-buffer' but display in a new frame."
@@ -457,31 +397,6 @@ than the window-width are displayed with a continuation symbol."
           ))
   )
 
-
-;; (use-package lsp-clangd
-;;   :load-path
-;;   "~/.emacs.d/taps/lsp-clangd/"
-;;   :init
-;;   (add-hook 'c-mode--hook #'lsp-clangd-c-enable)
-;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
-;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable))
-
-;; (use-package eglot)
-;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-;; (delete 'company-clang company-backends)
-
-;; (add-hook 'c-mode-hook 'eglot-ensure)
-;; (add-hook 'c++-mode-hook 'eglot-ensure)
-
-;; (use-package ox-extra :ensure org-plus-contrib)
-;; (ox-extras-activate '(ignore-headlines))
-
-;; (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-clang-tidy-setup))
-
-;; (with-eval-after-load 'flycheck
-;;   (require 'flycheck-clang-analyzer)
-;;   (flycheck-clang-analyzer-setup))
 
 
 (defun package-reinstall-all-activated-packages ()
@@ -671,19 +586,6 @@ than the window-width are displayed with a continuation symbol."
     (funcall f proc (xterm-color-filter string)))
 
   (advice-add 'compilation-filter :around #'my/advice-compilation-filter)
-  )
-
-
-(use-package code-review :ensure t
-  :after magit
-  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
-  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
-                                    ("C-c p" . #'code-review-comment-jump-previous)))
-
-  :config
-  (setq code-review-auth-login-marker 'forge)
-  (setq code-review-fill-column 80)
-  (add-hook 'code-review-mode-hook #'emojify-mode)
   )
 
 
