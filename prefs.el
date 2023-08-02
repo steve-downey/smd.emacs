@@ -65,3 +65,5 @@
 ;;(setq exordium-rtags-syntax-checker :flycheck)
 
 (setq exordium-helm-everywhere nil)
+
+(setq exordium-treesit-modes-enable t)
