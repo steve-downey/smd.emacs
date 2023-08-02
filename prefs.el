@@ -1,10 +1,11 @@
 (setq exordium-preferred-fonts
       '(
-        ("JetBrains Mono" . 140)
         ("Source Code Pro" . 140)
-        ("Roboto Mono" . 100)
+        ("JetBrains Mono" . 140)
+        ("Hack" . 140)
         ("Inconsolata" . 120)
         ("Consolas" . 120)
+        ("Noto Mono" . 120)
         ("Bitstream Vera Sans Mono" . 120)
         ("DejaVu Sans Mono" . 120)
         ("Droid Sans Mono" . 120)
