@@ -244,18 +244,27 @@ than the window-width are displayed with a continuation symbol."
   :config
   (setq graphviz-dot-indent-width 4))
 
-
 (org-babel-do-load-languages
- 'org-babel-load-languages
- '((dot . t)))
+  'org-babel-load-languages
+  (append org-babel-load-languages
+          '((dot . t))))
 
 (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 (setq plantuml-default-exec-mode 'jar)
 
 (setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ (append org-babel-load-languages
+         '((plantuml . t))))
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ (append org-babel-load-languages
+         '((ditaa . t))))
+
+(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
 (setq org-support-shift-select 'always)
 
@@ -592,5 +601,8 @@ than the window-width are displayed with a continuation symbol."
   )
 
 (global-set-key (kbd "C-c C-j s") 'bb-open-devx-space-ssh)
+
+(use-package org-transclusion
+  :after org)
 
 ;;; End of file

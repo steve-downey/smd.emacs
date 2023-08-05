@@ -6,6 +6,9 @@
 ;; (require 'package)
 ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
+(require 'package)
+(add-to-list 'package-archives
+             '("gnu-devel" . "https://elpa.gnu.org/devel/") :append)
 
 ;; (setq exordium-extra-packages
 ;;       '(ac-etags

@@ -1,5 +1,6 @@
 (setq exordium-preferred-fonts
       '(
+        ("JetBrains Mono" . 140)
         ("Source Code Pro" . 140)
         ("JetBrains Mono" . 140)
         ("Hack" . 140)
@@ -57,7 +58,7 @@
 
 (setq exordium-smooth-scroll nil)
 
-(setq exordium-enable-c++11-keywords :modern)
+(setq exordium-enable-c++11-keywords nil)
 
 (setq exordium-use-variable-pitch t)
 
