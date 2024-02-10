@@ -2,6 +2,7 @@
       '(
         ("JetBrains Mono" . 140)
         ("Source Code Pro" . 140)
+        ("JetBrains Mono" . 140)
         ("Hack" . 140)
         ("Inconsolata" . 120)
         ("Consolas" . 120)
@@ -67,7 +68,11 @@
 
 (setq exordium-helm-everywhere nil)
 
-(when (version< "29" emacs-version)
-  (setq exordium-treesit-modes-enable t))
+(setq exordium-treesit-modes-enable t)
 
-(setq exordium-theme-use-big-font nil)
+(defcustom exordium-clang-format-executable ["clang-format-18" "clang-format-17" "clang-format-16" "clang-format-15" "clang-format-14" "clang-format-13" "clang-format"]
+  "List of executable names to search for to run clang-format.
+Default is to choose the first that is found via `executable-find'."
+  :group 'exordium
+  :risky t
+  :type 'exordium-string-vector)
