@@ -103,7 +103,7 @@ than the window-width are displayed with a continuation symbol."
              (?m (file . ,"/bb/mbig/mbig77/msgsvn/trunk/msgbig/msgbig_objects.list"))
              (?p (file . ,"~/.profile"))
              (?b (file . ,"~/.bashrc"))
-             (?a (file . ,(locate-user-emacs-file "taps/smd/after-init.el")))
+             (?a (file . ,(locate-user-emacs-file "taps/smd.emacs/after-init.el")))
              ))
   (set-register (car r) (cadr r)))
 
@@ -242,8 +242,8 @@ than the window-width are displayed with a continuation symbol."
 
 
 (use-package graphviz-dot-mode
-  :config
-  (setq graphviz-dot-indent-width 4))
+  :custom
+  (graphviz-dot-indent-width 4 "set indent width"))
 
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -296,8 +296,8 @@ than the window-width are displayed with a continuation symbol."
 ;;         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
 ;;   )
 
-(use-package ox-bibtex
-  :ensure org-contrib)
+;; (use-package ox-bibtex
+;;   :ensure org-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
@@ -305,8 +305,8 @@ than the window-width are displayed with a continuation symbol."
 
 ;; Reveal.js + Org mode
 (use-package org-re-reveal
-  :config
-  (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
+  :custom
+  (org-re-reveal-root "file:////home/sdowney/bld/reveal.js" "Local root")
   )
 ;; (require 'oer-reveal-publish)
 ;; (oer-reveal-setup-submodules t)
@@ -390,13 +390,14 @@ than the window-width are displayed with a continuation symbol."
 
 
 (use-package org2blog
-  :config
+  :if (version< "29" emacs-version)
+  :custom
   ;; Don't use sourcecode tags in wordpress
-  (setq org2blog/wp-use-sourcecode-shortcode nil)
+  (org2blog/wp-use-sourcecode-shortcode nil )
   ;; Default parameters for sourcecode tag
-  (setq org2blog/wp-sourcecode-default-params nil)
-  (setq org2blog/wp-image-upload t)
-  (setq org2blog/wp-blog-alist
+  (org2blog/wp-sourcecode-default-params nil)
+  (org2blog/wp-image-upload t)
+  (org2blog/wp-blog-alist
         '(("sdowney"
            :url "http://www.sdowney.org/xmlrpc.php"
            :username "sdowney"
@@ -505,10 +506,10 @@ than the window-width are displayed with a continuation symbol."
 (use-package elpy
   :init
   (elpy-enable)
-  :config
-  (setq elpy-rpc-python-command "python3")
-  (setq python-shell-interpreter "python3"
-        python-shell-interpreter-args "-i"))
+  :custom
+  (elpy-rpc-python-command "python3" "")
+  (python-shell-interpreter "python3" "")
+  (python-shell-interpreter-args "-i" ""))
 
 (use-package pylint)
 
@@ -528,14 +529,14 @@ than the window-width are displayed with a continuation symbol."
 
 ;; (add-hook 'compilation-mode-hook 'ansi-color-compilation-filter)
 
-(use-package org-special-block-extras
-  :ensure t
-  :hook (org-mode . org-special-block-extras-mode)
-  ;; All relevant Lisp functions are prefixed ‘o-’; e.g., `o-docs-insert'.
-  :custom
-  (o-docs-libraries
-   '("~/org-special-block-extras/documentation.org")
-   "The places where I keep my ‘#+documentation’"))
+;; (use-package org-special-block-extras
+;;   :ensure t
+;;   :hook (org-mode . org-special-block-extras-mode)
+;;   ;; All relevant Lisp functions are prefixed ‘o-’; e.g., `o-docs-insert'.
+;;   :custom
+;;   (o-docs-libraries
+;;    '("~/org-special-block-extras/documentation.org")
+;;    "The places where I keep my ‘#+documentation’"))
 
 
 (eval-after-load "ox-latex"
@@ -572,9 +573,10 @@ than the window-width are displayed with a continuation symbol."
 
 
 (use-package auto-package-update
+  :custom
+  (auto-package-update-delete-old-versions t "")
+  (auto-package-update-hide-results t "")
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
 (use-package edit-indirect)
@@ -582,15 +584,16 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 (use-package xterm-color
-  :config
-  (setq comint-output-filter-functions
+  :custom
+  (comint-output-filter-functions
         (remove 'ansi-color-process-output comint-output-filter-functions))
+  (compilation-environment '("TERM=xterm-256color"))
+
+  :config
 
   (add-hook 'shell-mode-hook
             (lambda () (add-hook 'comint-preoutput-filter-functions
                                  'xterm-color-filter nil t)))
-  (setq compilation-environment '("TERM=xterm-256color"))
-
   (defun my/advice-compilation-filter (f proc string)
     (funcall f proc (xterm-color-filter string)))
 
@@ -619,7 +622,52 @@ than the window-width are displayed with a continuation symbol."
 
 (global-set-key (kbd "C-c C-j s") 'bb-open-devx-space-ssh)
 
+(use-package lsp-mode
+  :config
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-tramp-connection "clangd-16")
+                    :major-modes '(c-ts-mode)
+                    :remote? t
+                    :server-id 'clangd)))
+
 (use-package org-transclusion
   :after org)
+
+;; new emacs 29 things
+
+(when (version< "29" emacs-version)
+  (pixel-scroll-precision-mode)
+  (global-set-key (kbd "C-x j") #'duplicate-dwim)
+  (setq desktop-load-locked-desktop 'check-pid)
+  (setq show-paren-context-when-offscreen :child-frame)
+  (setq compilation-max-output-line-length nil)
+  (set-register ?m '(buffer . "*Messages*"))
+  )
+
+(defun smd/c-ts-indent-style()
+  "Override the built-in BSD indentation style with some additional rules"
+  `(
+    ;; align function arguments to the start of the first one, offset if standalone
+    ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "argument_list") (nth-sibling 1) 0)
+
+    ;; same for parameters
+    ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "parameter_list") (nth-sibling 1) 0)
+
+    ;; indent inside case blocks
+    ((parent-is "case_statement") standalone-parent c-ts-mode-indent-offset)
+
+    ;; do not indent preprocessor statements
+    ((node-is "preproc") column-0 0)
+    ;; do not indent inside namespace
+    ((n-p-gp nil nil "namespace_definition") grand-parent 0)
+
+    ;; prepend to bsd style
+    ,@(alist-get 'bsd (c-ts-mode--indent-styles 'cpp))))
+
+(when (treesit-available-p)
+  (setq c-ts-mode-indent-offset 4)
+  (setq c-ts-mode-indent-style #'smd/c-ts-indent-style))
 
 ;;; End of file

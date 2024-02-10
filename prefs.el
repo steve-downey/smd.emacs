@@ -2,7 +2,6 @@
       '(
         ("JetBrains Mono" . 140)
         ("Source Code Pro" . 140)
-        ("JetBrains Mono" . 140)
         ("Hack" . 140)
         ("Inconsolata" . 120)
         ("Consolas" . 120)
@@ -68,4 +67,7 @@
 
 (setq exordium-helm-everywhere nil)
 
-(setq exordium-treesit-modes-enable t)
+(when (version< "29" emacs-version)
+  (setq exordium-treesit-modes-enable t))
+
+(setq exordium-theme-use-big-font nil)
