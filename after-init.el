@@ -177,6 +177,10 @@ than the window-width are displayed with a continuation symbol."
 ;; clang format
 (use-package clang-format
   :bind ("C-c f" . 'clang-format-region)
+  :init
+  (setq-default clang-format-executable
+                (seq-find #'executable-find exordium-clang-format-executable))
+
   )
 ;;(global-set-key [C-tab] 'clang-format-region)
 ;;(global-set-key (kbd "C-c f") 'clang-format-region)
