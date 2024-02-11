@@ -244,33 +244,6 @@ than the window-width are displayed with a continuation symbol."
 (setq show-help-function nil)
 
 
-(use-package graphviz-dot-mode
-  :config
-  (setq graphviz-dot-indent-width 4))
-
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  (append org-babel-load-languages
-          '((dot . t))))
-
-(setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
-(setq plantuml-default-exec-mode 'jar)
-
-(setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-(org-babel-do-load-languages
- 'org-babel-load-languages
- (append org-babel-load-languages
-         '((plantuml . t))))
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- (append org-babel-load-languages
-         '((ditaa . t))))
-
-(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-
-(setq org-support-shift-select 'always)
 
 ;; Do not prompt to confirm evaluation
 ;; This may be dangerous - make sure you understand the consequences
@@ -299,32 +272,11 @@ than the window-width are displayed with a continuation symbol."
 ;;         bibtex-completion-notes-path "~/org/helm-bibtex-notes")
 ;;   )
 
-(use-package ox-bibtex
-  :ensure org-contrib)
 
 ;; (add-hook 'org-src-mode-hook
 ;;           (lambda ()
 ;;             (turn-off-fci-mode)))
 
-;; Reveal.js + Org mode
-(use-package org-re-reveal
-  :config
-  (setq org-re-reveal-root "file:////home/sdowney/bld/reveal.js")
-  )
-;; (require 'oer-reveal-publish)
-;; (oer-reveal-setup-submodules t)
-;; (oer-reveal-generate-include-files t)
-;; (oer-reveal-publish-setq-defaults)
-
-;; (require 'ox-reveal)
-;; (setq Org-Reveal-root "file:////home/sdowney/bld/reveal.js")
-;; (setq Org-Reveal-title-slide nil)
-
-;; ;; Google Calendar integration
-;; (require 'org-gcal)
-;; (setq org-gcal-client-id "849208402813-agsqjc2p8dnfrnr79s35efq014bus94o.apps.googleusercontent.com"
-;;       org-gcal-client-secret "nA1mxHmTlVg7nAFNmJDnTHDG"
-;;       org-gcal-file-alist '(("sdowney@gmail.com" .  "~/schedule.org")))
 
 ;; Powerline idle hack
 (defun powerline ()
@@ -392,25 +344,6 @@ than the window-width are displayed with a continuation symbol."
                    (c-set-style "llvm.org"))))))
 
 
-(use-package org2blog
-  :config
-  ;; Don't use sourcecode tags in wordpress
-  (setq org2blog/wp-use-sourcecode-shortcode nil)
-  ;; Default parameters for sourcecode tag
-  (setq org2blog/wp-sourcecode-default-params nil)
-  (setq org2blog/wp-image-upload t)
-  (setq org2blog/wp-blog-alist
-        '(("sdowney"
-           :url "http://www.sdowney.org/xmlrpc.php"
-           :username "sdowney"
-           :default-title "Hello World"
-           :default-categories ("org2blog" "emacs")
-           :tags-as-categories nil)
-          ))
-  )
-
-
-
 (defun package-reinstall-all-activated-packages ()
   "Refresh and reinstall all activated packages."
   (interactive)
@@ -460,19 +393,6 @@ than the window-width are displayed with a continuation symbol."
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(with-eval-after-load 'org-superstar
-  (set-face-attribute 'org-superstar-item nil :height 1.2)
-  (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
-  (set-face-attribute 'org-superstar-leading nil :height 1.3))
-
-;; Set different bullets
-(setq org-superstar-headline-bullets-list
-      '("◉" "◈" "○" "▷"))
-;; Stop cycling bullets to emphasize hierarchy of headlines.
-(setq org-superstar-cycle-headline-bullets nil)
-;; Hide away leading stars on terminal.
-(setq org-superstar-leading-fallback ?\s)
-
 ;; Make & CMake
 (projectile-register-project-type 'mymake '("Makefile")
                                   :project-file "Makefile"
@@ -514,41 +434,6 @@ than the window-width are displayed with a continuation symbol."
           'executable-make-buffer-file-executable-if-script-p)
 
 ;; (add-hook 'compilation-mode-hook 'ansi-color-compilation-filter)
-
-(use-package org-special-block-extras
-  :ensure t
-  :hook (org-mode . org-special-block-extras-mode)
-  ;; All relevant Lisp functions are prefixed ‘o-’; e.g., `o-docs-insert'.
-  :custom
-  (o-docs-libraries
-   '("~/org-special-block-extras/documentation.org")
-   "The places where I keep my ‘#+documentation’"))
-
-
-(eval-after-load "ox-latex"
-  '(add-to-list 'org-latex-classes
-                '("memoir" "\\documentclass{memoir}"
-                  ("\\section{%s}" . "\\section*{%s}")
-                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
-(setq org-latex-default-packages-alist
-      '(("AUTO" "inputenc" t
-        ("pdflatex"))
-       ("T1" "fontenc" t
-        ("pdflatex"))
-       ("" "graphicx" t)
-       ("" "longtable" nil)
-       ("" "wrapfig" nil)
-       ("" "rotating" nil)
-       ("normalem" "ulem" t)
-       ("" "amsmath" t)
-       ("" "amssymb" t)
-       ("" "capt-of" nil)
-       ("" "titletoc" nil)
-       ("" "hyperref" nil)))
 
 (use-package dockerfile-mode
   :ensure t
@@ -606,9 +491,6 @@ than the window-width are displayed with a continuation symbol."
 
 (global-set-key (kbd "C-c C-j s") 'bb-open-devx-space-ssh)
 
-(use-package org-transclusion
-  :after org)
-
 ;;; Enable YAS only for C++
 (add-hook 'c++-ts-mode-hook
           '(lambda ()
@@ -617,8 +499,5 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'c-ts-mode-hook
           '(lambda ()
              (yas-minor-mode)))
-
-(use-package citeproc
-  :after org)
 
 ;;; End of file
