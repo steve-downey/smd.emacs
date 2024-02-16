@@ -239,9 +239,10 @@ than the window-width are displayed with a continuation symbol."
 
 
 ;; compatibility hacks
-(setq x-gtk-use-system-tooltips nil)
-(tooltip-mode nil)
-(setq show-help-function nil)
+(when (version< emacs-version "29")
+  (setq x-gtk-use-system-tooltips nil)
+  (tooltip-mode nil)
+  (setq show-help-function nil))
 
 
 
@@ -499,5 +500,42 @@ than the window-width are displayed with a continuation symbol."
 (add-hook 'c-ts-mode-hook
           '(lambda ()
              (yas-minor-mode)))
+
+;; new emacs 29 things
+
+(when (version< "29" emacs-version)
+  (pixel-scroll-precision-mode)
+  (global-set-key (kbd "C-x j") #'duplicate-dwim)
+  (setq desktop-load-locked-desktop 'check-pid)
+  (setq show-paren-context-when-offscreen :child-frame)
+  (setq compilation-max-output-line-length nil)
+  (set-register ?m '(buffer . "*Messages*"))
+  )
+
+(defun smd/c-ts-indent-style()
+  "Override the built-in BSD indentation style with some additional rules."
+  `(
+    ;; align function arguments to the start of the first one, offset if standalone
+    ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "argument_list") (nth-sibling 1) 0)
+
+    ;; same for parameters
+    ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "parameter_list") (nth-sibling 1) 0)
+
+    ;; indent inside case blocks
+    ((parent-is "case_statement") standalone-parent c-ts-mode-indent-offset)
+
+    ;; do not indent preprocessor statements
+    ((node-is "preproc") column-0 0)
+    ;; do not indent inside namespace
+    ((n-p-gp nil nil "namespace_definition") grand-parent 0)
+
+    ;; prepend to bsd style
+    ,@(alist-get 'bsd (c-ts-mode--indent-styles 'cpp))))
+
+(when (treesit-available-p)
+  (setq c-ts-mode-indent-offset 4)
+  (setq c-ts-mode-indent-style #'smd/c-ts-indent-style))
 
 ;;; End of file
