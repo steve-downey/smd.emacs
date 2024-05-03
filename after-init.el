@@ -103,7 +103,7 @@ than the window-width are displayed with a continuation symbol."
              (?m (file . ,"/bb/mbig/mbig77/msgsvn/trunk/msgbig/msgbig_objects.list"))
              (?p (file . ,"~/.profile"))
              (?b (file . ,"~/.bashrc"))
-             (?a (file . ,(locate-user-emacs-file "taps/smd/after-init.el")))
+             (?a (file . ,(locate-user-emacs-file "taps/smd.emacs/after-init.el")))
              ))
   (set-register (car r) (cadr r)))
 
