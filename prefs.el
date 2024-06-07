@@ -63,7 +63,7 @@
 
 (setq exordium-treesit-modes-enable nil)
 
-(defcustom exordium-clang-format-executable ["clang-format-19" "clang-format-18" "clang-format-17" "clang-format-16" "clang-format-15" "clang-format-14" "clang-format-13" "clang-format"]
+(defcustom exordium-clang-format-executable ["clang-format-19" "clang-format-18" "clang-format-17" "clang-format-16" "clang-format-15" "clang-format"]
   "List of executable names to search for to run clang-format.
 Default is to choose the first that is found via `executable-find'."
   :group 'exordium
