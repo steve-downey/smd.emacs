@@ -539,4 +539,10 @@ than the window-width are displayed with a continuation symbol."
   (setq c-ts-mode-indent-offset 4)
   (setq c-ts-mode-indent-style #'smd/c-ts-indent-style))
 
+(defun really-kill-emacs ()
+  "Like `kill-emacs', but ignores `kill-emacs-hook'."
+  (interactive)
+  (let ((kill-emacs-hook) (confirm-kill-emacs nil))
+    (save-buffers-kill-emacs t)))
+
 ;;; End of file
