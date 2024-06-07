@@ -546,4 +546,7 @@ than the window-width are displayed with a continuation symbol."
     (save-buffers-kill-emacs t)))
 
 (use-package ninja-mode)
+
+(unless (display-graphic-p)
+  (xterm-mouse-mode 1))
 ;;; End of file
