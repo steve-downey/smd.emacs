@@ -481,7 +481,7 @@ than the window-width are displayed with a continuation symbol."
                )
          )
     )
-  (setq space (format "/ssh:%s.dev.bloomberg.com|docker:%s:.."
+  (setq space (format "/ssh:%s|docker:%s:.."
                       spaces-host
                       docker-id
                       )
