@@ -544,4 +544,5 @@ than the window-width are displayed with a continuation symbol."
   (let ((kill-emacs-hook) (confirm-kill-emacs nil))
     (save-buffers-kill-emacs t)))
 
+(use-package ninja-mode)
 ;;; End of file
