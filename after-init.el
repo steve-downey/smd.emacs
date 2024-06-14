@@ -397,6 +397,9 @@ than the window-width are displayed with a continuation symbol."
               ("<tab>" . helm-execute-persistent-action)
               ("C-z" . helm-select-action)))
 
+(use-package all-the-icons
+  :if (display-graphic-p))
+
 
 (use-package projectile
   :config
