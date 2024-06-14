@@ -13,13 +13,16 @@
 
 (use-package google-c-style)
 
-;; I like to know what time it is. These lines show the clock in
-;; the status bar. Comment out first line if you prefer to show
-;; time in 12 hour format
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time)
 
+(use-package time
+  :ensure nil
+  :init
+  (setq display-time-day-and-date t
+        display-time-24hr-format t
+        display-time-use-mail-icon t
+        display-time-interval 10)
+  :config
+  (display-time))
 
 ;; Show trailing white spaces
 (setq-default show-trailing-whitespace t)
@@ -231,6 +234,7 @@ than the window-width are displayed with a continuation symbol."
 
 ;;; SERVER MODE
 (use-package server)
+
 (if (server-running-p)
     (load-theme 'tomorrow-night-blue t)
   (setq confirm-kill-emacs #'yes-or-no-p)
@@ -387,12 +391,63 @@ than the window-width are displayed with a continuation symbol."
               ("<tab>" . helm-execute-persistent-action)
               ("C-z" . helm-select-action)))
 
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+(use-package treemacs
+  :commands (treemacs-follow-mode
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode
+             treemacs-load-theme)
+  :custom
+  (treemacs--icon-size 16)
+  :bind (("<f7>" . treemacs)
+         ("<f8>" . treemacs-select-window))
+  :config
+  (setq treemacs-width 34
+        treemacs-is-never-other-window t
+        treemacs-space-between-root-nodes nil
+        treemacs-indentation 2)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode nil)
+  (treemacs-fringe-indicator-mode 'always))
+
+
+(use-package treemacs-magit
+  :after (treemacs magit))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package projectile
+  :delight
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  ("s-p" . projectile-command-map)
+  :init
+  (setq projectile-mode-line-function '(lambda () (format " [%s]" (projectile-project-name))))
   :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
+  (projectile-mode +1)
+
+  ;; Cache projectile projects
+  (setq projectile-enable-caching t)
+  ;; Defer to git if possible
+  (setq projectile-indexing-method 'alien)
+
+  (setq projectile-completion-system 'auto)
+  )
+
+(use-package project
+  :ensure nil
+  :config
+  (add-hook 'project-find-functions #'project-projectile))
+
+(use-package projectile-ripgrep
+  :ensure t)
 
 ;; Make & CMake
 (projectile-register-project-type 'mymake '("Makefile")
@@ -548,4 +603,47 @@ than the window-width are displayed with a continuation symbol."
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1))
+
+
+(use-package rg
+  :ensure-system-package
+  (rg . ripgrep)
+  :commands (rg
+             rg-project
+             rg-literal
+             rg-dwim
+             rg-dwim-project-dir
+             rg-dwim-current-dir
+             rg-dwim-current-file)
+  :custom
+  (rg-command-line-flags '("--no-ignore-vcs"))
+  (rg-buffer-name "ripgrep")
+  (rg-ignore-ripgreprc t))
+
+(use-package rg-menu
+  :ensure nil ;; part of rg
+  :commands (rg-menu rg-enable-menu))
+
+(use-package wgrep-rg
+  :ensure nil ;; part of rg
+  :commands (wgrep-rg-setup)
+  :hook
+  (rg-mode-hook . wgrep-rg-setup))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  (setq elpy-rpc-python-command "python3.7"))
+
+(use-package esup
+  :ensure t
+  ;; To use MELPA Stable use ":pin mepla-stable",
+  :pin melpa
+  :commands (esup))
+
+(use-package pylint
+  :ensure t)
+
 ;;; End of file
