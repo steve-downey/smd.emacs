@@ -20,6 +20,15 @@
 (setq display-time-day-and-date t)
 (display-time)
 
+(use-package time
+  :ensure nil
+  :init
+  (setq display-time-day-and-date t
+        display-time-24hr-format t
+        display-time-use-mail-icon t
+        display-time-interval 10)
+  :config
+  (display-time))
 
 ;; Show trailing white spaces
 (setq-default show-trailing-whitespace t)
