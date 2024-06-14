@@ -561,4 +561,31 @@ than the window-width are displayed with a continuation symbol."
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1))
+
+
+(use-package rg
+  :ensure-system-package
+  (rg . ripgrep)
+  :commands (rg
+             rg-project
+             rg-literal
+             rg-dwim
+             rg-dwim-project-dir
+             rg-dwim-current-dir
+             rg-dwim-current-file)
+  :custom
+  (rg-command-line-flags '("--no-ignore-vcs"))
+  (rg-buffer-name "ripgrep")
+  (rg-ignore-ripgreprc t))
+
+(use-package rg-menu
+  :ensure nil ;; part of rg
+  :commands (rg-menu rg-enable-menu))
+
+(use-package wgrep-rg
+  :ensure nil ;; part of rg
+  :commands (wgrep-rg-setup)
+  :hook
+  (rg-mode-hook . wgrep-rg-setup))
+
 ;;; End of file
