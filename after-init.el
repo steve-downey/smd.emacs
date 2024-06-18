@@ -630,20 +630,4 @@ than the window-width are displayed with a continuation symbol."
   :hook
   (rg-mode-hook . wgrep-rg-setup))
 
-(use-package elpy
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  (setq elpy-rpc-python-command "python3.7"))
-
-(use-package esup
-  :ensure t
-  ;; To use MELPA Stable use ":pin mepla-stable",
-  :pin melpa
-  :commands (esup))
-
-(use-package pylint
-  :ensure t)
-
 ;;; End of file
