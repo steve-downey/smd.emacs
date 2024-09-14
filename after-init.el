@@ -630,4 +630,5 @@ than the window-width are displayed with a continuation symbol."
   :hook
   (rg-mode-hook . wgrep-rg-setup))
 
+(exordium-show-trailing-whitespace-mode -1)
 ;;; End of file
