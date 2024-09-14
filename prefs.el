@@ -69,3 +69,5 @@ Default is to choose the first that is found via `executable-find'."
   :group 'exordium
   :risky t
   :type 'exordium-string-vector)
+
+(setq exordium-lsp-mode-enable t)
