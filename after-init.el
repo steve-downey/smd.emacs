@@ -631,4 +631,6 @@ than the window-width are displayed with a continuation symbol."
   (rg-mode-hook . wgrep-rg-setup))
 
 (exordium-show-trailing-whitespace-mode -1)
+
+(setq package-install-upgrade-built-in exordium-upgrade-built-in)
 ;;; End of file

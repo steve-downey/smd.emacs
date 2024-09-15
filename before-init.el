@@ -4,9 +4,9 @@
   (setq exordium-bloomberg 't))
 
 
-(require 'package)
-(add-to-list 'package-archives
-             '("gnu-devel" . "https://elpa.gnu.org/devel/") :append)
+;; (require 'package)
+;; (add-to-list 'package-archives
+;;              '("gnu-devel" . "https://elpa.gnu.org/devel/") :append)
 
 
 ;; (defvar bootstrap-version)

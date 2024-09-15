@@ -71,3 +71,5 @@ Default is to choose the first that is found via `executable-find'."
   :type 'exordium-string-vector)
 
 (setq exordium-lsp-mode-enable t)
+
+(setq exordium-upgrade-built-in t)
