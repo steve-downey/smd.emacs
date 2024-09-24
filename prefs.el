@@ -55,7 +55,7 @@
 
 (setq exordium-use-variable-pitch t)
 
-(setq exordium-complete-mode :company)
+(setq exordium-complete-mode nil)
 
 ;;(setq exordium-rtags-syntax-checker :flycheck)
 
@@ -73,3 +73,9 @@ Default is to choose the first that is found via `executable-find'."
 (setq exordium-lsp-mode-enable t)
 
 (setq exordium-upgrade-built-in t)
+
+(setq exordium-use-projectile nil)
+
+(setq exordium-helm-nowhere t)
+
+(setq exordium-company-nowhere t)

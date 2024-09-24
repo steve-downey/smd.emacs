@@ -632,7 +632,8 @@ than the window-width are displayed with a continuation symbol."
 
 (exordium-show-trailing-whitespace-mode -1)
 
-(setq package-install-upgrade-built-in exordium-upgrade-built-in)
+;;(setq package-install-upgrade-built-in exordium-upgrade-built-in)
+(setq package-install-upgrade-built-in 'nil)
 
 (setq tab-always-indent 'complete)
 ;;; End of file
