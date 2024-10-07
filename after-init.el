@@ -636,4 +636,43 @@ than the window-width are displayed with a continuation symbol."
 (setq package-install-upgrade-built-in 'nil)
 
 (setq tab-always-indent 'complete)
+
+(setq uniquify-buffer-name-style 'forward)
+
+(setq mouse-yank-at-point t)
+
+;; Resolve symlinks when opening files, so that any operations are conducted
+;; from the file's true directory (like `find-file').
+(setq find-file-visit-truename t
+      vc-follow-symlinks t)
+
+;;; Minibuffer
+;; Allow nested minibuffers
+(setq enable-recursive-minibuffers t)
+
+;; Keep the cursor out of the read-only portions of the.minibuffer
+(setq minibuffer-prompt-properties
+      '(read-only t intangible t cursor-intangible t face
+                  minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+;; switch-to-buffer runs pop-to-buffer-same-window instead
+(setq switch-to-buffer-obey-display-actions t)
+
+
+(setq compilation-always-kill t
+      compilation-ask-about-save nil
+      compilation-scroll-output 'first-error)
+
+;;; Auto revert
+;; Auto-revert in Emacs is a feature that automatically updates the
+;; contents of a buffer to reflect changes made to the underlying file
+;; on disk.
+(setq revert-without-query (list ".")  ; Do not prompt
+      auto-revert-stop-on-user-input nil
+      auto-revert-verbose t)
+
+;; Revert other buffers (e.g, Dired)
+(setq global-auto-revert-non-file-buffers t)
+
 ;;; End of file

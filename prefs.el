@@ -1,3 +1,5 @@
+;;; prefs.el --- preferences -*- no-byte-compile: t; lexical-binding: t; -*-
+
 (setq exordium-preferred-fonts
       '(
         ("JetBrains Mono" . 140)
@@ -79,3 +81,7 @@ Default is to choose the first that is found via `executable-find'."
 (setq exordium-helm-nowhere t)
 
 (setq exordium-company-nowhere t)
+
+(setq exordium-complete-mode :corfu)
+
+(setq exordium-minibuffer-complete-mode :vertico)
